@@ -39,7 +39,13 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
         binding.executePendingBindings()
     }
 
-    //TODO: Add companion object to inflate ViewHolder (from)
+    companion object {
+        fun from(parent: ViewGroup): RepresentativeViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binder = ViewholderRepresentativeBinding.inflate(layoutInflater, parent, false)
+            return RepresentativeViewHolder(binder)
+        }
+    }
 
     private fun showSocialLinks(channels: List<Channel>) {
         val facebookUrl = getFacebookUrl(channels)
@@ -79,5 +85,20 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
 }
 
 //TODO: Create RepresentativeDiffCallback
+//TODO: Validate this class
+class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
+    override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
+        return oldItem.office == newItem.office
+    }
+
+    override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
+        return oldItem == newItem
+    }
+}
+
 
 //TODO: Create RepresentativeListener
+//TODO: Validate this class
+class RepresentativeListener(val listener: (representative: Representative) -> Unit) {
+    fun onClick(representative: Representative) = listener(representative)
+}

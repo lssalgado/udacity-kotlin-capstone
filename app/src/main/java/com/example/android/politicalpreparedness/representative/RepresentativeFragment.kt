@@ -7,6 +7,10 @@ import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import com.example.android.politicalpreparedness.BuildConfig
+import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.databinding.FragmentLaunchBinding
+import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import java.util.Locale
 
@@ -16,12 +20,17 @@ class DetailFragment : Fragment() {
         //TODO: Add Constant for Location request
     }
 
+    private lateinit var binding: FragmentRepresentativeBinding
+
+
+
     //TODO: Declare ViewModel
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
+        binding = FragmentRepresentativeBinding.inflate(inflater)
+        binding.lifecycleOwner = this
         //TODO: Establish bindings
 
         //TODO: Define and assign Representative adapter
@@ -29,7 +38,7 @@ class DetailFragment : Fragment() {
         //TODO: Populate Representative adapter
 
         //TODO: Establish button listeners for field and location search
-
+        return binding.root
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
