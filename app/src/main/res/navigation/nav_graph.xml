@@ -10,7 +10,12 @@
         android:id="@+id/launchFragment"
         android:name="com.example.android.politicalpreparedness.launch.LaunchFragment"
         android:label="fragment_launch"
-        tools:layout="@layout/fragment_launch"/>
+        tools:layout="@layout/fragment_launch">
+        <action android:id="@+id/action_launch_fragment_to_elections_fragment"
+            app:destination="@+id/electionsFragment"/>
+        <action android:id="@+id/action_launch_fragment_to_representative_fragment"
+            app:destination="@+id/representativeFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/representativeFragment"

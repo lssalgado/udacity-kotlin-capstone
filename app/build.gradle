@@ -76,4 +76,7 @@ dependencies {
 
     // Location
     implementation "com.google.android.gms:play-services-location:$version_play_services_location"
+
+    // Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }

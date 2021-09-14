@@ -1,27 +1,44 @@
 package com.example.android.politicalpreparedness.representative
 
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.example.android.politicalpreparedness.BuildConfig
+import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.databinding.FragmentLaunchBinding
+import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
+import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 import java.util.Locale
 
 class DetailFragment : Fragment() {
 
     companion object {
-        //TODO: Add Constant for Location request
+        const val REQUEST_LOCATION_PERMISSION_ID = 1001
     }
+
+    private lateinit var binding: FragmentRepresentativeBinding
+    private val coarseLocationPermission = android.Manifest.permission.ACCESS_COARSE_LOCATION
+    private val fineLocationPermission = android.Manifest.permission.ACCESS_FINE_LOCATION
+
 
     //TODO: Declare ViewModel
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
+        binding = FragmentRepresentativeBinding.inflate(inflater)
+        binding.lifecycleOwner = this
         //TODO: Establish bindings
 
         //TODO: Define and assign Representative adapter
@@ -29,25 +46,68 @@ class DetailFragment : Fragment() {
         //TODO: Populate Representative adapter
 
         //TODO: Establish button listeners for field and location search
-
+        return binding.root
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         //TODO: Handle location permission result to get location on permission granted
+        if (requestCode == REQUEST_LOCATION_PERMISSION_ID) {
+            val missingPermissions = arrayListOf(coarseLocationPermission, fineLocationPermission)
+            missingPermissions.forEach { permission ->
+                if (ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        permission
+                    ) == PackageManager.PERMISSION_GRANTED) {
+                    missingPermissions.remove(permission)
+                }
+            }
+
+            if (missingPermissions.isNotEmpty()) {
+                Timber.e("The following permissions were not granted: ${missingPermissions.joinToString(",")}")
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.missing_location_permissions),
+                    Snackbar.LENGTH_LONG
+                )
+                    // Extracted from: https://github.com/udacity/android-kotlin-geo-fences/blob/master/app/src/main/java/com/example/android/treasureHunt/HuntMainActivity.kt#L145
+                    .setAction(R.string.settings) {
+                        // Displays App settings screen.
+                        startActivity(Intent().apply {
+                            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        })
+                    }.show()
+            }
+        }
     }
 
     private fun checkLocationPermissions(): Boolean {
         return if (isPermissionGranted()) {
             true
         } else {
-            //TODO: Request Location permissions
+            requestPermissions(
+                arrayOf(
+                    coarseLocationPermission,
+                    fineLocationPermission
+                ), REQUEST_LOCATION_PERMISSION_ID
+            )
             false
         }
     }
 
     private fun isPermissionGranted() : Boolean {
-        //TODO: Check if permission is already granted and return (true = granted, false = denied/other)
+        return if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                coarseLocationPermission
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            false
+        } else ActivityCompat.checkSelfPermission(
+            requireContext(),
+            fineLocationPermission
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun getLocation() {
