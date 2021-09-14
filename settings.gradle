@@ -16,3 +16,27 @@
  */
 
 include ':app'
+
+def loadLocalProperties() {
+
+    def file = new File(rootDir, "local.properties")
+    if (!file.exists()) {
+        throw new GradleException("${file.getAbsolutePath()} is missing!")
+    }
+
+    Properties properties = new Properties()
+    file.withInputStream { instr ->
+        properties.load(instr)
+    }
+
+    String NASA_API_KEY = "API_KEY"
+    String apiKey = properties.get(NASA_API_KEY)
+
+    if (apiKey == null) {
+        throw new GradleException("${NASA_API_KEY} is missing in local.properties!" )
+    }
+
+    System.setProperty(NASA_API_KEY, apiKey)
+}
+
+loadLocalProperties()

@@ -17,6 +17,13 @@ It leverages the following components from the Jetpack library:
 * [Navigation](https://developer.android.com/topic/libraries/architecture/navigation/) with the SafeArgs plugin for parameter passing between fragments
 
 
+## How to setup your API Key
+Open `local.properties` located at project's root and add a variable named `API_KEY` with your key like so:
+
+`API_KEY=THATSNOTAVALIDAPIKEY`
+
+After that all you need to do is build and run the project :)
+
 ## Setting up the Repository
 
 To get started with this project, simply pull the repository and import the project into Android Studio. From there, deploy the project to an emulator or device. 
