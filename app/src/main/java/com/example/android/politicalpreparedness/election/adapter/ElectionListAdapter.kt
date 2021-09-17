@@ -16,8 +16,14 @@ import com.example.android.politicalpreparedness.network.models.Channel
 //import com.example.android.politicalpreparedness.databinding.ViewholderElectionBinding
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.representative.model.Representative
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class ElectionListAdapter(private val clickListener: ElectionListener): ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback()) {
+class ElectionListAdapter(private val electionListener: ElectionListener): ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback()) {
+
+    private val adapterScope = CoroutineScope(Dispatchers.Default)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ElectionViewHolder {
         return ElectionViewHolder.from(parent)
@@ -25,7 +31,15 @@ class ElectionListAdapter(private val clickListener: ElectionListener): ListAdap
 
     override fun onBindViewHolder(holder: ElectionViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, electionListener)
+    }
+
+    override fun submitList(list: List<Election>?) {
+        adapterScope.launch {
+            withContext(Dispatchers.Main) {
+                super.submitList(list)
+            }
+        }
     }
 
     //TODO: Bind ViewHolder
@@ -36,8 +50,10 @@ class ElectionListAdapter(private val clickListener: ElectionListener): ListAdap
 //TODO: Create ElectionViewHolder
 class ElectionViewHolder(val binding: ViewholderElectionBinding): RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: Election) {
+    fun bind(item: Election, electionListener: ElectionListener) {
         //TODO fill this method
+        binding.election = item
+        binding.electionListener = electionListener
         binding.executePendingBindings()
     }
 

@@ -9,7 +9,7 @@ import com.example.android.politicalpreparedness.repository.ElectionRepository
 import kotlinx.coroutines.launch
 
 //TODO: Construct ViewModel and provide election datasource
-class ElectionsViewModel(val repository: ElectionRepository): ViewModel() {
+class ElectionsViewModel(private val repository: ElectionRepository): ViewModel() {
 
     init {
         getElections()

@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
+import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
+import com.example.android.politicalpreparedness.election.adapter.ElectionListener
+import com.example.android.politicalpreparedness.network.jsonadapter.ElectionAdapter
 import timber.log.Timber
 
 class ElectionsFragment: Fragment() {
@@ -39,6 +42,17 @@ class ElectionsFragment: Fragment() {
         //TODO: Link elections to voter info
 
         //TODO: Initiate recycler adapters
+        val listener = ElectionListener {
+            Timber.e("TODO implement ElectionListener")
+        }
+        val adapter = ElectionListAdapter(listener)
+        binding.upcomingElections.adapter = adapter
+        viewModel.elections.observe(viewLifecycleOwner, Observer { elections ->
+            elections?.let {
+                adapter.submitList(it)
+            }
+        })
+
 
         //TODO: Populate recycler adapters
         return binding.root
