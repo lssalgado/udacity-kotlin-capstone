@@ -6,10 +6,31 @@
     <variable
         name="election"
         type="com.example.android.politicalpreparedness.network.models.Election" />
+    <variable
+        name="electionListener"
+        type="com.example.android.politicalpreparedness.election.adapter.ElectionListener" />
 </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:onClick="@{() -> electionListener.onClick(election)}">
+
+        <TextView
+            android:id="@+id/election_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{election.name}"/>
+
+        <TextView
+            android:id="@+id/election_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/election_name"
+            android:text="@{election.electionDay.toLocaleString()}"
+            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
