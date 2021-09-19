@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.repository.ElectionRepository
 
 //TODO: Create Factory to generate ElectionViewModel with provided election datasource
-class ElectionsViewModelFactory(val application: Application): ViewModelProvider.Factory {
+class ElectionsViewModelFactory(private val application: Application): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ElectionsViewModel::class.java)) {
             val repository = ElectionRepository(application)

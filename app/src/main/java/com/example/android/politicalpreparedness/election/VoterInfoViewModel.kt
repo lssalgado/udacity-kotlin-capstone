@@ -1,9 +1,20 @@
 package com.example.android.politicalpreparedness.election
 
 import androidx.lifecycle.ViewModel
-import com.example.android.politicalpreparedness.database.ElectionDao
+import com.example.android.politicalpreparedness.network.models.Division
+import com.example.android.politicalpreparedness.repository.ElectionRepository
+import timber.log.Timber
 
-class VoterInfoViewModel(private val dataSource: ElectionDao) : ViewModel() {
+class VoterInfoViewModel(
+    private val repository: ElectionRepository,
+    electionId: Int,
+    division: Division
+) : ViewModel() {
+
+    init {
+        Timber.e("ElectionId = $electionId")
+        Timber.e("Division = $division")
+    }
 
     //TODO: Add live data to hold voter info
 
