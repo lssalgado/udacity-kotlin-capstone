@@ -36,11 +36,21 @@ class ElectionsFragment: Fragment() {
         val listener = ElectionListener {
             Timber.e("TODO implement ElectionListener")
         }
-        val adapter = ElectionListAdapter(listener)
-        binding.upcomingElections.adapter = adapter
-        viewModel.elections.observe(viewLifecycleOwner, Observer { elections ->
+        val currentElectionsAdapter = ElectionListAdapter(listener)
+        binding.upcomingElections.adapter = currentElectionsAdapter
+        viewModel.currentElections.observe(viewLifecycleOwner, Observer { elections ->
             elections?.let {
-                adapter.submitList(it)
+                Timber.e("CurrentElections = ${it.joinToString("\n")}")
+                currentElectionsAdapter.submitList(it)
+            }
+        })
+
+        val savedElectionsAdapter = ElectionListAdapter(listener)
+        binding.savedElections.adapter = savedElectionsAdapter
+        viewModel.savedElections.observe(viewLifecycleOwner, Observer { elections ->
+            elections?.let {
+                Timber.e("SavedElections = ${it.joinToString("\n")}")
+                savedElectionsAdapter.submitList(it)
             }
         })
 
