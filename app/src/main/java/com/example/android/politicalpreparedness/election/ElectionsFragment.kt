@@ -15,8 +15,6 @@ import timber.log.Timber
 
 class ElectionsFragment: Fragment() {
 
-    //TODO: Declare ViewModel
-
     private lateinit var viewModel: ElectionsViewModel
     private lateinit var binding: FragmentElectionBinding
 
@@ -29,13 +27,6 @@ class ElectionsFragment: Fragment() {
         val viewModelFactory = ElectionsViewModelFactory(requireActivity().application)
         viewModel =
             ViewModelProvider(this, viewModelFactory).get(ElectionsViewModel::class.java)
-
-        viewModel.elections.observe(viewLifecycleOwner, Observer {
-            it.forEach { election ->
-                Timber.e("Election = $election")
-            }
-        })
-        //TODO: Add ViewModel values and create ViewModel
 
         //TODO: Add binding values
 
