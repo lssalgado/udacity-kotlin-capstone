@@ -17,6 +17,13 @@ It leverages the following components from the Jetpack library:
 * [Navigation](https://developer.android.com/topic/libraries/architecture/navigation/) with the SafeArgs plugin for parameter passing between fragments
 
 
+## How to setup your API Key
+Open `local.properties` located at project's root and add a variable named `API_KEY` with your key like so:
+
+`API_KEY=THATSNOTAVALIDAPIKEY`
+
+After that all you need to do is build and run the project :)
+
 ## Setting up the Repository
 
 To get started with this project, simply pull the repository and import the project into Android Studio. From there, deploy the project to an emulator or device. 
@@ -31,17 +38,17 @@ To get started with this project, simply pull the repository and import the proj
 
 ## Suggested Workflow
 
-* It is recommend you save all beautification until the end of the project. Ensure functionality first, then clean up UI. While UI is a component of the application, it is best to deliver a functional product.
-* Start by getting all screens in the application to navigate to each other, even with dummy data. If needed, comment out stub code to get the application to compile. You will need to create actions in *nav_graph.xml* and UI elements to trigger the navigation. 
-* Create an API key and begin work on the Elections Fragment  and associated ViewModel. 
-	* Use the elections endpoint in the Civics API and requires no parameters.
-	* You will need to create a file to complete the step.
-	* This will require edits to the Manifest.
-	* Link the election to the Voter Info Fragment.
-* Begin work on the Voter Info Fragment and associated ViewModel.
-* Begin work on the Representative Fragment and associated ViewModel.
-	* This will require edits to Gradle.
-	* You will need to create a file to complete the step.
+- [ ] It is recommend you save all beautification until the end of the project. Ensure functionality first, then clean up UI. While UI is a component of the application, it is best to deliver a functional product.
+- [ ] Start by getting all screens in the application to navigate to each other, even with dummy data. If needed, comment out stub code to get the application to compile. You will need to create actions in *nav_graph.xml* and UI elements to trigger the navigation. 
+- [ ] Create an API key and begin work on the Elections Fragment  and associated ViewModel. 
+	- [ ] Use the elections endpoint in the Civics API and requires no parameters.
+	- [ ] You will need to create a file to complete the step.
+	- [ ] This will require edits to the Manifest.
+	- [ ] Link the election to the Voter Info Fragment.
+- [ ] Begin work on the Voter Info Fragment and associated ViewModel.
+- [ ] Begin work on the Representative Fragment and associated ViewModel.
+	- [ ] This will require edits to Gradle.
+	- [ ] You will need to create a file to complete the step.
 
 
 
