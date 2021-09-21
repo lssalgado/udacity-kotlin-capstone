@@ -16,6 +16,10 @@
     <string name="missing_voting_locations">Missing voting locations URL</string>
     <string name="missing_ballot_informations">Missing ballot informations URL</string>
     <string name="missing_address">Missing Election address</string>
+    <string name="my_representatives">My Representatives</string>
+    <string name="representative_search">Representative Search</string>
+    <string name="find_my_representatives">Find My Representatives</string>
+    <string name="use_my_location">Use My Location</string>
 
     <!-- TODO: Add necessary string values -->
 
