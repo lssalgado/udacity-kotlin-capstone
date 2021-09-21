@@ -27,6 +27,22 @@ class ElectionRepository(val context: Context) {
         }
     }
 
+    fun getElectionById(id: Int): LiveData<Election?> {
+        return database.electionDao.getElectionById(id)
+    }
+
+    suspend fun updateElection(election: Election) {
+        withContext(Dispatchers.IO) {
+            database.electionDao.update(election)
+        }
+    }
+
+    suspend fun deleteElection(id: Int) {
+        withContext(Dispatchers.IO) {
+            database.electionDao.deleteElection(id)
+        }
+    }
+
     /**
      * Database maintenance method used to remove all old elections that are not saved.
      */
