@@ -19,7 +19,7 @@ class ElectionRepository(val context: Context) {
 
     suspend fun refreshElections() {
         withContext(Dispatchers.IO) {
-            val response = CivicsApi.retrofitService.getElections(BuildConfig.API_KEY)
+            val response = CivicsApi.retrofitService.getElections()
             Timber.e(response.toString())
             val newElections = response.elections.toTypedArray()
             deleteOldNonSavedElections(newElections)

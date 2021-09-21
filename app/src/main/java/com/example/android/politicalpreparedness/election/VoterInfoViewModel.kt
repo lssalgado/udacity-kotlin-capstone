@@ -39,8 +39,7 @@ class VoterInfoViewModel(
         viewModelScope.launch {
             val voterInfo = CivicsApi.retrofitService.getVoterInfo(
                 "${division.country}, ${division.state}",
-                electionId,
-                BuildConfig.API_KEY
+                electionId
             )
             Timber.e(voterInfo.toString())
             _voterInfo.value = voterInfo
