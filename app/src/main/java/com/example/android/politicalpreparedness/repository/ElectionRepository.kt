@@ -30,15 +30,25 @@ class ElectionRepository(val context: Context) {
     /**
      * Database maintenance method used to remove all old elections that are not saved.
      */
-    private suspend fun deleteOldNonSavedElections(elections: Array<Election>) {
+    private suspend fun deleteOldNonSavedElections(newElections: Array<Election>) {
         withContext(Dispatchers.IO) {
-            elections.forEach { election ->
-                if (!elections.contains(election)) {
-                    if (!election.saved) {
-                        database.electionDao.deleteElection(election.id)
-                    } else if (!election.old){
-                        election.old = true
-                        database.electionDao.update(election)
+            currentElections.value?.let { currElections ->
+                currElections.forEach { election ->
+                    val existingElection = newElections.find{ election.id == it.id }
+                    // If no election with a matching id is found
+                    if (existingElection == null) {
+                        // And the current election is not saved
+                        if (!election.saved) {
+                            // The election is deleted
+                            database.electionDao.deleteElection(election.id)
+                        } else if (!election.old) {
+                            // The flag is updated
+                            election.old = true
+                            database.electionDao.update(election)
+                        }
+                    } else {
+                        // Else the current saved value is saved
+                        existingElection.saved = election.saved
                     }
                 }
             }
