@@ -7,7 +7,7 @@
 
         <OnSwipe
             app:dragDirection="dragUp"
-            app:touchAnchorId="@id/list_placeholder" />
+            app:touchAnchorId="@id/representative_list" />
     </Transition>
     
     <ConstraintSet android:id="@+id/start">
@@ -80,11 +80,11 @@
             android:id="@+id/representative_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/list_placeholder"
+            app:layout_constraintBottom_toTopOf="@id/representative_list"
             app:layout_constraintTop_toBottomOf="@id/button_location" />
 
         <Constraint
-            android:id="@+id/list_placeholder"
+            android:id="@+id/representative_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -158,7 +158,7 @@
             app:layout_constraintBottom_toTopOf="parent" />
 
         <Constraint
-            android:id="@+id/list_placeholder"
+            android:id="@+id/representative_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center"
