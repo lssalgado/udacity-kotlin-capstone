@@ -12,11 +12,14 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.BuildConfig
 import com.example.android.politicalpreparedness.R
-import com.example.android.politicalpreparedness.databinding.FragmentLaunchBinding
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListener
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import java.util.Locale
@@ -33,6 +36,7 @@ class DetailFragment : Fragment() {
 
 
     //TODO: Declare ViewModel
+    private lateinit var viewModel: RepresentativeViewModel
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -40,6 +44,22 @@ class DetailFragment : Fragment() {
         binding = FragmentRepresentativeBinding.inflate(inflater)
         binding.lifecycleOwner = this
         //TODO: Establish bindings
+
+        viewModel = ViewModelProvider(this).get(RepresentativeViewModel::class.java)
+
+        val listener = RepresentativeListener { representative ->
+            Timber.e(representative.toString())
+            Timber.e("TODO implement RepresentativeListener!!")
+        }
+        val adapter = RepresentativeListAdapter(listener)
+        binding.representativeList.adapter = adapter
+
+        viewModel.representatives.observe(viewLifecycleOwner, Observer { representatives ->
+            representatives?.let {
+                Timber.e("Representatives = ${it.joinToString("\n")}")
+                adapter.submitList(it)
+            }
+        })
 
         //TODO: Define and assign Representative adapter
 
