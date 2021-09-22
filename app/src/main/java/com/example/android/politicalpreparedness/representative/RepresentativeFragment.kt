@@ -1,11 +1,14 @@
 package com.example.android.politicalpreparedness.representative
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -21,9 +24,20 @@ import com.example.android.politicalpreparedness.databinding.FragmentRepresentat
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListener
+import com.example.android.politicalpreparedness.representative.adapter.setNewValue
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
-import java.util.Locale
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.first
+import kotlin.collections.forEach
+import kotlin.collections.isNotEmpty
+import kotlin.collections.joinToString
+import kotlin.collections.map
+import kotlin.collections.toCollection
 
 class DetailFragment : Fragment() {
 
@@ -33,9 +47,18 @@ class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentRepresentativeBinding
     private val permissions: Array<String> = arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
+        Manifest.permission.ACCESS_FINE_LOCATION
+    )
 
+    private val locationManager: LocationManager by lazy {
+        requireActivity().getSystemService(
+            Context.LOCATION_SERVICE
+        ) as LocationManager
+    }
+
+    private val locationListener = LocationListener { location ->
+        updateViewsWithLocation(location)
+    }
 
     //TODO: Declare ViewModel
     private lateinit var viewModel: RepresentativeViewModel
@@ -57,7 +80,9 @@ class DetailFragment : Fragment() {
         binding.representativeList.adapter = adapter
 
         binding.buttonLocation.setOnClickListener {
-            checkLocationPermissions()
+            if (checkLocationPermissions()) {
+                getLocation()
+            }
         }
 
         viewModel.representatives.observe(viewLifecycleOwner, Observer { representatives ->
@@ -105,6 +130,8 @@ class DetailFragment : Fragment() {
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         })
                     }.show()
+            } else {
+                getLocation()
             }
         }
     }
@@ -133,9 +160,33 @@ class DetailFragment : Fragment() {
         return true
     }
 
+    @SuppressLint("MissingPermission")
     private fun getLocation() {
         //TODO: Get location from LocationServices
         //TODO: The geoCodeLocation method is a helper function to change the lat/long location to a human readable street address
+        val location: Location? =
+            locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if (location != null) {
+            updateViewsWithLocation(location)
+        } else {
+            val locationRequest = LocationRequest.create().apply {
+                priority = LocationRequest.PRIORITY_LOW_POWER
+            }
+            val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+            val settingsClient = LocationServices.getSettingsClient(requireActivity())
+            val locationSettingsResponseTask =
+                settingsClient.checkLocationSettings(builder.build())
+            locationSettingsResponseTask.addOnSuccessListener {
+                val minTime = 5000L
+                val minDistance = 50f
+                locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    minTime,
+                    minDistance,
+                    locationListener
+                )
+            }
+        }
     }
 
     private fun geoCodeLocation(location: Location): Address {
@@ -145,6 +196,15 @@ class DetailFragment : Fragment() {
                     Address(address.thoroughfare, address.subThoroughfare, address.locality, address.adminArea, address.postalCode)
                 }
                 .first()
+    }
+
+    private fun updateViewsWithLocation(location: Location) {
+        val address = geoCodeLocation(location)
+        binding.addressLine1.setText(address.line1)
+        binding.addressLine2.setText(address.line2)
+        binding.city.setText(address.city)
+        binding.zip.setText(address.zip)
+        binding.state.setNewValue(address.state)
     }
 
     private fun hideKeyboard() {

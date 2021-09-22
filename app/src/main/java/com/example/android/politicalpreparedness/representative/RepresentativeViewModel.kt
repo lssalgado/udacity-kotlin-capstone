@@ -29,7 +29,7 @@ class RepresentativeViewModel: ViewModel() {
     val address: LiveData<String>
         get() = _address
 
-    fun getRepresentatives() {
+    private fun getRepresentatives() {
         viewModelScope.launch {
             val (offices, officials) = CivicsApi.retrofitService.getRepresentatives("3601+s+broad+st+philadelphia+pa+19148%2C+united+states")
             Timber.e(offices.toString())
