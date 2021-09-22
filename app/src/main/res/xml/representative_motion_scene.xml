@@ -97,28 +97,28 @@
             android:id="@+id/search_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/address_line_1"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Constraint
             android:id="@+id/address_line_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/address_line_2"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Constraint
             android:id="@+id/address_line_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/city"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Constraint
             android:id="@+id/city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/zip"
             app:layout_constraintEnd_toStartOf="@id/state"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -135,7 +135,7 @@
             android:id="@+id/zip"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_search"
             app:layout_constraintEnd_toEndOf="@id/city"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -143,19 +143,19 @@
             android:id="@+id/button_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/button_location" />
 
         <Constraint
             android:id="@+id/button_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/representative_title" />
 
         <Constraint
             android:id="@+id/representative_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/representative_list" />
 
         <Constraint
             android:id="@+id/representative_list"
