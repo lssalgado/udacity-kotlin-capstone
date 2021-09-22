@@ -60,6 +60,10 @@ class DetailFragment : Fragment() {
         updateViewsWithLocation(location)
     }
 
+    private val statesArray: Array<String> by lazy {
+        context!!.resources.getStringArray(R.array.states)
+    }
+
     //TODO: Declare ViewModel
     private lateinit var viewModel: RepresentativeViewModel
 
@@ -83,6 +87,11 @@ class DetailFragment : Fragment() {
             if (checkLocationPermissions()) {
                 getLocation()
             }
+        }
+
+        binding.buttonSearch.setOnClickListener {
+            hideKeyboard()
+            onFindMyRepresentativesClick()
         }
 
         viewModel.representatives.observe(viewLifecycleOwner, Observer { representatives ->
@@ -205,6 +214,19 @@ class DetailFragment : Fragment() {
         binding.city.setText(address.city)
         binding.zip.setText(address.zip)
         binding.state.setNewValue(address.state)
+        viewModel.getRepresentatives(address)
+    }
+
+    private fun onFindMyRepresentativesClick() {
+        val state = statesArray[binding.state.selectedItemId.toInt()]
+        val address = Address(
+            binding.addressLine1.text.toString(),
+            binding.addressLine2.text.toString(),
+            binding.city.text.toString(),
+            state,
+            binding.zip.text.toString()
+        )
+        viewModel.getRepresentatives(address)
     }
 
     private fun hideKeyboard() {

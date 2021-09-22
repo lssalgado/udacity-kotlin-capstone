@@ -4,18 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.android.politicalpreparedness.BuildConfig
 import com.example.android.politicalpreparedness.network.CivicsApi
+import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.model.Representative
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class RepresentativeViewModel: ViewModel() {
-
-
-    init {
-        getRepresentatives()
-    }
 
     private val _representatives = MutableLiveData<List<Representative>>()
     val representatives: LiveData<List<Representative>>
@@ -25,16 +20,19 @@ class RepresentativeViewModel: ViewModel() {
     val loading: LiveData<Boolean>
         get() = _loading
 
-    private val _address = MutableLiveData<String>()
-    val address: LiveData<String>
+    private val _address = MutableLiveData<Address>()
+    val address: LiveData<Address>
         get() = _address
 
-    private fun getRepresentatives() {
+    fun getRepresentatives(address: Address) {
+        _address.value = address
+        _loading.value = true
         viewModelScope.launch {
-            val (offices, officials) = CivicsApi.retrofitService.getRepresentatives("3601+s+broad+st+philadelphia+pa+19148%2C+united+states")
+            val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(address.toFormattedString())
             Timber.e(offices.toString())
             Timber.e(officials.toString())
-            _representatives.value = offices.flatMap { office -> office.getRepresentatives(officials) }
+            _representatives.value =
+                offices.flatMap { office -> office.getRepresentatives(officials) }
             representatives.value!!.forEach {
                 Timber.e(it.toString())
             }
