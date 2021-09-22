@@ -1,5 +1,6 @@
 package com.example.android.politicalpreparedness.representative
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -31,8 +32,9 @@ class DetailFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentRepresentativeBinding
-    private val coarseLocationPermission = android.Manifest.permission.ACCESS_COARSE_LOCATION
-    private val fineLocationPermission = android.Manifest.permission.ACCESS_FINE_LOCATION
+    private val permissions: Array<String> = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
 
 
     //TODO: Declare ViewModel
@@ -54,6 +56,10 @@ class DetailFragment : Fragment() {
         val adapter = RepresentativeListAdapter(listener)
         binding.representativeList.adapter = adapter
 
+        binding.buttonLocation.setOnClickListener {
+            checkLocationPermissions()
+        }
+
         viewModel.representatives.observe(viewLifecycleOwner, Observer { representatives ->
             representatives?.let {
                 Timber.e("Representatives = ${it.joinToString("\n")}")
@@ -73,8 +79,8 @@ class DetailFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         //TODO: Handle location permission result to get location on permission granted
         if (requestCode == REQUEST_LOCATION_PERMISSION_ID) {
-            val missingPermissions = arrayListOf(coarseLocationPermission, fineLocationPermission)
-            missingPermissions.forEach { permission ->
+            val missingPermissions = permissions.toCollection(ArrayList())
+            permissions.forEach { permission ->
                 if (ActivityCompat.checkSelfPermission(
                         requireContext(),
                         permission
@@ -108,26 +114,23 @@ class DetailFragment : Fragment() {
             true
         } else {
             requestPermissions(
-                arrayOf(
-                    coarseLocationPermission,
-                    fineLocationPermission
-                ), REQUEST_LOCATION_PERMISSION_ID
+                permissions, REQUEST_LOCATION_PERMISSION_ID
             )
             false
         }
     }
 
     private fun isPermissionGranted() : Boolean {
-        return if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                coarseLocationPermission
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            false
-        } else ActivityCompat.checkSelfPermission(
-            requireContext(),
-            fineLocationPermission
-        ) == PackageManager.PERMISSION_GRANTED
+        permissions.forEach { permission ->
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return false
+            }
+        }
+        return true
     }
 
     private fun getLocation() {
