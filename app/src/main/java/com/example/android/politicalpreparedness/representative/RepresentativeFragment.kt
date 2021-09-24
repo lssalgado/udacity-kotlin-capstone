@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -45,6 +46,7 @@ class DetailFragment : Fragment() {
         const val REQUEST_LOCATION_PERMISSION_ID = 1001
     }
 
+    private lateinit var toast: Toast
     private lateinit var binding: FragmentRepresentativeBinding
     private val permissions: Array<String> = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION
@@ -112,6 +114,13 @@ class DetailFragment : Fragment() {
                 } else {
                     binding.loadingImg.visibility = View.INVISIBLE
                 }
+            }
+        })
+
+        viewModel.toast.observe(viewLifecycleOwner, Observer { id ->
+            id?.let {
+                showToast(it)
+                viewModel.onToastShown()
             }
         })
 
@@ -248,4 +257,12 @@ class DetailFragment : Fragment() {
         imm.hideSoftInputFromWindow(view!!.windowToken, 0)
     }
 
+    private fun showToast(id: Int) {
+        if (::toast.isInitialized) {
+            // Cancels the current toast to avoid queueing multiple toasts
+            toast.cancel()
+        }
+        toast = Toast.makeText(context, id, Toast.LENGTH_SHORT)
+        toast.show()
+    }
 }

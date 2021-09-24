@@ -10,7 +10,7 @@ import com.example.android.politicalpreparedness.representative.model.Representa
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class RepresentativeViewModel: ViewModel() {
+class RepresentativeViewModel : ViewModel() {
 
     private val _representatives = MutableLiveData<List<Representative>>()
     val representatives: LiveData<List<Representative>>
@@ -23,6 +23,10 @@ class RepresentativeViewModel: ViewModel() {
     private val _address = MutableLiveData<Address>()
     val address: LiveData<Address>
         get() = _address
+
+    private val _toast = MutableLiveData<Int>()
+    val toast: LiveData<Int>
+        get() = _toast
 
     fun getRepresentatives(address: Address) {
         _address.value = address
@@ -38,6 +42,10 @@ class RepresentativeViewModel: ViewModel() {
                 Timber.e(it.toString())
             }
         }
+    }
+
+    fun onToastShown() {
+        _toast.value = null
     }
     //TODO: Establish live data for representatives and address
 
