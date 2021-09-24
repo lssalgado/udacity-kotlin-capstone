@@ -3,7 +3,6 @@ package com.example.android.politicalpreparedness.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.android.politicalpreparedness.BuildConfig
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
@@ -11,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import timber.log.Timber
+import com.example.android.politicalpreparedness.network.Result
 
 class ElectionRepository(val context: Context) {
 
@@ -89,11 +89,5 @@ class ElectionRepository(val context: Context) {
                 }
             }
         }
-    }
-
-    sealed class Result {
-        object Success : Result()
-        class Error(val msg: String) : Result()
-        class HttpError(val code: Int) : Result()
     }
 }

@@ -60,3 +60,9 @@ object CivicsApi {
         retrofit.create(CivicsApiService::class.java)
     }
 }
+
+sealed class Result {
+    object Success : Result()
+    class Error(val msg: String) : Result()
+    class HttpError(val code: Int) : Result()
+}

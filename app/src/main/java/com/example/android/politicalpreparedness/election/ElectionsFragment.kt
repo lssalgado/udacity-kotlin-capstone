@@ -13,7 +13,7 @@ import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.election.adapter.ElectionListener
-import com.example.android.politicalpreparedness.repository.ElectionRepository
+import com.example.android.politicalpreparedness.network.Result
 import timber.log.Timber
 
 class ElectionsFragment: Fragment() {
@@ -65,11 +65,11 @@ class ElectionsFragment: Fragment() {
         viewModel.result.observe(viewLifecycleOwner, Observer { result ->
             result?.let {
                 when(it) {
-                    is ElectionRepository.Result.Error -> {
+                    is Result.Error -> {
                         showToast(it.msg)
                         viewModel.onResultHandled()
                     }
-                    is ElectionRepository.Result.HttpError -> {
+                    is Result.HttpError -> {
                         showHttpErrorToast(it.code)
                         viewModel.onResultHandled()
                     }
