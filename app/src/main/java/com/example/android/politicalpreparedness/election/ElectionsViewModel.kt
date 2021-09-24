@@ -21,6 +21,11 @@ class ElectionsViewModel(private val repository: ElectionRepository): ViewModel(
 
     val currentElections = repository.currentElections
     val savedElections = repository.savedElections
+    val result = repository.result
+
+    fun onResultHandled() {
+        repository.onResultHandled()
+    }
 
     //TODO: Create live data val for saved elections
 

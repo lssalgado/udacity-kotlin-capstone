@@ -2,12 +2,14 @@ package com.example.android.politicalpreparedness.repository
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.android.politicalpreparedness.BuildConfig
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import timber.log.Timber
 
 class ElectionRepository(val context: Context) {
@@ -16,15 +18,33 @@ class ElectionRepository(val context: Context) {
 
     val currentElections: LiveData<List<Election>> = database.electionDao.getCurrentElections()
     val savedElections: LiveData<List<Election>> = database.electionDao.getSavedElections()
+    private val _result = MutableLiveData<Result>()
+    val result :LiveData<Result>
+    get() = _result
 
     suspend fun refreshElections() {
-        withContext(Dispatchers.IO) {
+        try {
             val response = CivicsApi.retrofitService.getElections()
-            Timber.e(response.toString())
-            val newElections = response.elections.toTypedArray()
-            deleteOldNonSavedElections(newElections)
-            database.electionDao.insertAll(*newElections)
+            _result.value = Result.Success
+            withContext(Dispatchers.IO) {
+                Timber.e(response.toString())
+                val newElections = response.elections.toTypedArray()
+                deleteOldNonSavedElections(newElections)
+                database.electionDao.insertAll(*newElections)
+            }
+        } catch (e: HttpException) {
+            _result.value = Result.HttpError(e.code())
+            Timber.e(e)
+        } catch (e: Exception) {
+            _result.value = Result.Error(
+                e.message ?: "An Exception was thrown when trying to fetch elections!!"
+            )
+            Timber.e(e)
         }
+    }
+
+    fun onResultHandled() {
+        _result.value = null
     }
 
     fun getElectionById(id: Int): LiveData<Election?> {
@@ -69,5 +89,11 @@ class ElectionRepository(val context: Context) {
                 }
             }
         }
+    }
+
+    sealed class Result {
+        object Success : Result()
+        class Error(val msg: String) : Result()
+        class HttpError(val code: Int) : Result()
     }
 }
