@@ -53,6 +53,9 @@ class VoterInfoViewModel(
             } catch (e: HttpException) {
                 Timber.e(e)
                 _httpError.value = e.code()
+            } catch (e: Exception) {
+                Timber.e(e)
+                _errorMsg.value = e.message ?: "Could not fetch VoterInfo from the API!!"
             }
         }
     }
@@ -73,6 +76,10 @@ class VoterInfoViewModel(
     private val _httpError = MutableLiveData<Int>()
     val httpError: LiveData<Int>
         get() = _httpError
+
+    private val _errorMsg = MutableLiveData<String>()
+    val errorMsg: LiveData<String>
+        get() = _errorMsg
 
     fun onUrlClick(url: String) {
         if (url.isNotEmpty()) {
@@ -114,5 +121,9 @@ class VoterInfoViewModel(
 
     fun onHttpErrorToastShown() {
         _httpError.value = null
+    }
+
+    fun onErrorMessageToastShown() {
+        _errorMsg.value = null
     }
 }

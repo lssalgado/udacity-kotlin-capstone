@@ -52,6 +52,13 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
+        viewModel.errorMsg.observe(viewLifecycleOwner, Observer { errorMsg ->
+            errorMsg?.let {
+                showToast(it)
+                viewModel.onErrorMessageToastShown()
+            }
+        })
+
         //TODO: Add binding values
 
         //TODO: Populate voter info -- hide views without provided data.
@@ -89,6 +96,15 @@ class VoterInfoFragment : Fragment() {
             toast.cancel()
         }
         toast = Toast.makeText(context, id, Toast.LENGTH_SHORT)
+        toast.show()
+    }
+
+    private fun showToast(msg: String) {
+        if (::toast.isInitialized) {
+            // Cancels the current toast to avoid queueing multiple toasts
+            toast.cancel()
+        }
+        toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
         toast.show()
     }
 
