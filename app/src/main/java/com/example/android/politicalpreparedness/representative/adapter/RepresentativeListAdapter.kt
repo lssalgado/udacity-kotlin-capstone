@@ -15,7 +15,7 @@ import com.example.android.politicalpreparedness.databinding.ViewholderRepresent
 import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
 
-class RepresentativeListAdapter: ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()){
+class RepresentativeListAdapter(private val listener: RepresentativeListener): ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepresentativeViewHolder {
         return RepresentativeViewHolder.from(parent)
@@ -32,6 +32,16 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
     fun bind(item: Representative) {
         binding.representative = item
         binding.representativePhoto.setImageResource(R.drawable.ic_profile)
+        binding.wwwIcon.visibility = View.GONE
+        binding.facebookIcon.visibility = View.GONE
+        binding.twitterIcon.visibility = View.GONE
+        item.official.channels?.let {
+            showSocialLinks(it)
+        }
+
+        item.official.urls?.let {
+            showWWWLinks(it)
+        }
 
         //TODO: Show social links ** Hint: Use provided helper methods
         //TODO: Show www link ** Hint: Use provided helper methods
@@ -88,11 +98,13 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
 //TODO: Validate this class
 class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
     override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
-        return oldItem.office == newItem.office
+        Timber.e("areItemsTheSame")
+        return oldItem === newItem
     }
 
     override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
-        return oldItem == newItem
+        Timber.e("areContentsTheSame")
+        return oldItem.official.name == newItem.official.name
     }
 }
 
