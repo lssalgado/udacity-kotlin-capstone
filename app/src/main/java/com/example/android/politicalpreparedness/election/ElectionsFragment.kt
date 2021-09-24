@@ -42,6 +42,9 @@ class ElectionsFragment: Fragment() {
         viewModel.currentElections.observe(viewLifecycleOwner, Observer { elections ->
             elections?.let {
                 Timber.e("CurrentElections = ${it.joinToString("\n")}")
+                if (it.isNotEmpty()) {
+                    binding.upcomingLoading.visibility = View.INVISIBLE
+                }
                 currentElectionsAdapter.submitList(it)
             }
         })
@@ -51,10 +54,10 @@ class ElectionsFragment: Fragment() {
         viewModel.savedElections.observe(viewLifecycleOwner, Observer { elections ->
             elections?.let {
                 Timber.e("SavedElections = ${it.joinToString("\n")}")
+                binding.savedLoading.visibility = View.INVISIBLE
                 savedElectionsAdapter.submitList(it)
             }
         })
-
 
         //TODO: Populate recycler adapters
         return binding.root
