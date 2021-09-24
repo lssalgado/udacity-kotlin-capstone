@@ -31,6 +31,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
+import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.first
@@ -63,7 +64,7 @@ class DetailFragment : Fragment() {
     }
 
     private val statesArray: Array<String> by lazy {
-        context!!.resources.getStringArray(R.array.states)
+        requireContext().resources.getStringArray(R.array.states)
     }
 
     //TODO: Declare ViewModel
@@ -231,13 +232,18 @@ class DetailFragment : Fragment() {
     }
 
     private fun updateViewsWithLocation(location: Location) {
-        val address = geoCodeLocation(location)
-        binding.addressLine1.setText(address.line1)
-        binding.addressLine2.setText(address.line2)
-        binding.city.setText(address.city)
-        binding.zip.setText(address.zip)
-        binding.state.setNewValue(address.state)
-        viewModel.getRepresentatives(address)
+        try {
+            val address = geoCodeLocation(location)
+            binding.addressLine1.setText(address.line1)
+            binding.addressLine2.setText(address.line2)
+            binding.city.setText(address.city)
+            binding.zip.setText(address.zip)
+            binding.state.setNewValue(address.state)
+            viewModel.getRepresentatives(address)
+        } catch (e: IOException) {
+            Timber.e(e)
+            showToast(e.message ?: "An IOException when trying to get the device's location!!")
+        }
     }
 
     private fun onFindMyRepresentativesClick() {
@@ -263,6 +269,15 @@ class DetailFragment : Fragment() {
             toast.cancel()
         }
         toast = Toast.makeText(context, id, Toast.LENGTH_SHORT)
+        toast.show()
+    }
+
+    private fun showToast(msg: String) {
+        if (::toast.isInitialized) {
+            // Cancels the current toast to avoid queueing multiple toasts
+            toast.cancel()
+        }
+        toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
         toast.show()
     }
 }
