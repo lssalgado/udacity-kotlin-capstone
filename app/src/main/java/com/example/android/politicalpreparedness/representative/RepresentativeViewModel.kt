@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.model.Representative
+import com.example.android.politicalpreparedness.network.Result
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import timber.log.Timber
 
 class RepresentativeViewModel : ViewModel() {
@@ -28,24 +30,42 @@ class RepresentativeViewModel : ViewModel() {
     val toast: LiveData<Int>
         get() = _toast
 
+    private val _result = MutableLiveData<Result>()
+    val result: LiveData<Result>
+        get() = _result
+
     fun getRepresentatives(address: Address) {
         _address.value = address
         _loading.value = true
         viewModelScope.launch {
-            val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(address.toFormattedString())
-            Timber.e(offices.toString())
-            Timber.e(officials.toString())
-            _loading.value = false
-            _representatives.value =
-                offices.flatMap { office -> office.getRepresentatives(officials) }
-            representatives.value!!.forEach {
-                Timber.e(it.toString())
+            try {
+                val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(address.toFormattedString())
+                Timber.e(offices.toString())
+                Timber.e(officials.toString())
+                _loading.value = false
+                _representatives.value =
+                    offices.flatMap { office -> office.getRepresentatives(officials) }
+                representatives.value!!.forEach {
+                    Timber.e(it.toString())
+                }
+            } catch (e: HttpException) {
+                Timber.e(e)
+                _result.value = Result.HttpError(e.code())
+                _loading.value = false
+            } catch (e: Exception) {
+                Timber.e(e)
+                _result.value = Result.Error(e.message ?: "Could not fetch Representatives from the API!!")
+                _loading.value = false
             }
         }
     }
 
     fun onToastShown() {
         _toast.value = null
+    }
+
+    fun onResultHandled() {
+        _result.value = null
     }
     //TODO: Establish live data for representatives and address
 
