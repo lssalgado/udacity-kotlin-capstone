@@ -11,8 +11,9 @@ class ElectionsViewModel(private val repository: ElectionRepository): ViewModel(
     init {
         getElections()
     }
+
     //TODO: Create live data val for upcoming elections
-    fun getElections() {
+    private fun getElections() {
         viewModelScope.launch {
             repository.refreshElections()
         }
