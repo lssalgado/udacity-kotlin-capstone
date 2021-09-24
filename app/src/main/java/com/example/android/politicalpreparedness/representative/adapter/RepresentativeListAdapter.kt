@@ -98,12 +98,10 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
 //TODO: Validate this class
 class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
     override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
-        Timber.e("areItemsTheSame")
         return oldItem === newItem
     }
 
     override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
-        Timber.e("areContentsTheSame")
         return oldItem.official.name == newItem.official.name
     }
 }
