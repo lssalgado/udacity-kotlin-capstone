@@ -1,7 +1,6 @@
 package com.example.android.politicalpreparedness.election
 
 import androidx.lifecycle.*
-import com.example.android.politicalpreparedness.BuildConfig
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Division
@@ -12,11 +11,12 @@ import com.example.android.politicalpreparedness.repository.ElectionRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import timber.log.Timber
+import com.example.android.politicalpreparedness.network.Result
 
 class VoterInfoViewModel(
     private val repository: ElectionRepository,
     private val electionId: Int,
-    val division: Division
+    private val division: Division
 ) : ViewModel() {
 
     private val _voterInfo = MutableLiveData<VoterInfoResponse>()
@@ -52,10 +52,10 @@ class VoterInfoViewModel(
                 }
             } catch (e: HttpException) {
                 Timber.e(e)
-                _httpError.value = e.code()
+                _result.value = Result.HttpError(e.code())
             } catch (e: Exception) {
                 Timber.e(e)
-                _errorMsg.value = e.message ?: "Could not fetch VoterInfo from the API!!"
+                _result.value = Result.Error(e.message ?: "Could not fetch VoterInfo from the API!!")
             }
         }
     }
@@ -73,13 +73,9 @@ class VoterInfoViewModel(
     val toastText: LiveData<Int>
         get() = _toastText
 
-    private val _httpError = MutableLiveData<Int>()
-    val httpError: LiveData<Int>
-        get() = _httpError
-
-    private val _errorMsg = MutableLiveData<String>()
-    val errorMsg: LiveData<String>
-        get() = _errorMsg
+    private val _result = MutableLiveData<Result>()
+    val result: LiveData<Result>
+        get() = _result
 
     fun onUrlClick(url: String) {
         if (url.isNotEmpty()) {
@@ -119,11 +115,7 @@ class VoterInfoViewModel(
 
     }
 
-    fun onHttpErrorToastShown() {
-        _httpError.value = null
-    }
-
-    fun onErrorMessageToastShown() {
-        _errorMsg.value = null
+    fun onResultHandled() {
+        _result.value = null
     }
 }

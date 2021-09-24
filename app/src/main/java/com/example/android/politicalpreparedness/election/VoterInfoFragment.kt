@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
+import com.example.android.politicalpreparedness.network.Result
 
 class VoterInfoFragment : Fragment() {
 
@@ -45,17 +46,21 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
-        viewModel.httpError.observe(viewLifecycleOwner, Observer { error ->
-            error?.let {
-                showHttpErrorToast(it)
-                viewModel.onHttpErrorToastShown()
-            }
-        })
-
-        viewModel.errorMsg.observe(viewLifecycleOwner, Observer { errorMsg ->
-            errorMsg?.let {
-                showToast(it)
-                viewModel.onErrorMessageToastShown()
+        viewModel.result.observe(viewLifecycleOwner, Observer { result ->
+            result?.let {
+                when (it) {
+                    is Result.Error -> {
+                        showToast(it.msg)
+                        viewModel.onResultHandled()
+                    }
+                    is Result.HttpError -> {
+                        showHttpErrorToast(it.code)
+                        viewModel.onResultHandled()
+                    }
+                    is Result.Success -> {
+                        viewModel.onResultHandled()
+                    }
+                }
             }
         })
 
