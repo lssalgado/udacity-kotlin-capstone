@@ -10,6 +10,7 @@ import com.example.android.politicalpreparedness.network.models.State
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import com.example.android.politicalpreparedness.repository.ElectionRepository
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import timber.log.Timber
 
 class VoterInfoViewModel(
@@ -37,16 +38,21 @@ class VoterInfoViewModel(
 
     private fun getVoterInfo() {
         viewModelScope.launch {
-            val voterInfo = CivicsApi.retrofitService.getVoterInfo(
-                "${division.country}, ${division.state}",
-                electionId
-            )
-            Timber.e(voterInfo.toString())
-            _voterInfo.value = voterInfo
-            if (voterInfo.state != null && voterInfo.state.isNotEmpty()){
-                _state.value = voterInfo.state[0]
-            } else {
-                _toastText.value = R.string.missing_state
+            try {
+                val voterInfo = CivicsApi.retrofitService.getVoterInfo(
+                    "${division.country}, ${division.state}",
+                    electionId
+                )
+                Timber.e(voterInfo.toString())
+                _voterInfo.value = voterInfo
+                if (voterInfo.state != null && voterInfo.state.isNotEmpty()) {
+                    _state.value = voterInfo.state[0]
+                } else {
+                    _toastText.value = R.string.missing_state
+                }
+            } catch (e: HttpException) {
+                Timber.e(e)
+                _httpError.value = e.code()
             }
         }
     }
@@ -63,6 +69,10 @@ class VoterInfoViewModel(
     private val _toastText = MutableLiveData<Int>()
     val toastText: LiveData<Int>
         get() = _toastText
+
+    private val _httpError = MutableLiveData<Int>()
+    val httpError: LiveData<Int>
+        get() = _httpError
 
     fun onUrlClick(url: String) {
         if (url.isNotEmpty()) {
@@ -100,5 +110,9 @@ class VoterInfoViewModel(
             }
         }
 
+    }
+
+    fun onHttpErrorToastShown() {
+        _httpError.value = null
     }
 }

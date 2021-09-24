@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
 
 class VoterInfoFragment : Fragment() {
@@ -44,6 +45,13 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
+        viewModel.httpError.observe(viewLifecycleOwner, Observer { error ->
+            error?.let {
+                showHttpErrorToast(it)
+                viewModel.onHttpErrorToastShown()
+            }
+        })
+
         //TODO: Add binding values
 
         //TODO: Populate voter info -- hide views without provided data.
@@ -57,6 +65,16 @@ class VoterInfoFragment : Fragment() {
         //TODO: Handle save button UI state
         //TODO: cont'd Handle save button clicks
         return binding.root
+    }
+
+    private fun showHttpErrorToast(code: Int) {
+        if (::toast.isInitialized) {
+            // Cancels the current toast to avoid queueing multiple toasts
+            toast.cancel()
+        }
+        val string = getString(R.string.could_not_fetch_voter_info, code)
+        toast = Toast.makeText(context, string, Toast.LENGTH_LONG)
+        toast.show()
     }
 
     //TODO: Create method to load URL intents

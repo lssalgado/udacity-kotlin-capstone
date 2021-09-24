@@ -20,6 +20,7 @@
     <string name="representative_search">Representative Search</string>
     <string name="find_my_representatives">Find My Representatives</string>
     <string name="use_my_location">Use My Location</string>
+    <string name="could_not_fetch_voter_info">Could not fetch VoterInfo from the API!!\n Error code: %d</string>
 
     <!-- TODO: Add necessary string values -->
 
