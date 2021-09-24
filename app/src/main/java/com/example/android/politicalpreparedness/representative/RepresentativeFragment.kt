@@ -74,6 +74,9 @@ class DetailFragment : Fragment() {
         binding.lifecycleOwner = this
         //TODO: Establish bindings
 
+        // Disables the animation while the recyclerview is not filled
+        binding.motionLayout.getTransition(R.id.representative_transition).setEnable(false)
+
         viewModel = ViewModelProvider(this).get(RepresentativeViewModel::class.java)
 
         val listener = RepresentativeListener { representative ->
@@ -98,6 +101,17 @@ class DetailFragment : Fragment() {
             representatives?.let {
                 Timber.e("Representatives = ${it.joinToString("\n")}")
                 adapter.submitList(it)
+                binding.motionLayout.getTransition(R.id.representative_transition).setEnable(true)
+            }
+        })
+
+        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
+            loading?.let {
+                if (it) {
+                    binding.loadingImg.visibility = View.VISIBLE
+                } else {
+                    binding.loadingImg.visibility = View.INVISIBLE
+                }
             }
         })
 

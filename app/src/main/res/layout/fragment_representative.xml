@@ -4,9 +4,15 @@
     xmlns:motion="http://schemas.android.com/tools">
 
     <!-- TODO: Add data binding node -->
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.android.politicalpreparedness.representative.RepresentativeViewModel" />
+    </data>
 
     <!-- TODO: Add motion scene to hide form on vertical scroll. -->
     <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motion_layout"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         app:layoutDescription="@xml/representative_motion_scene"
@@ -137,6 +143,16 @@
             app:layout_constraintVertical_chainStyle="packed"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
+
+        <ImageView
+            android:id="@+id/loading_img"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/representative_list"
+            app:layout_constraintBottom_toBottomOf="@id/representative_list"
+            android:visibility="invisible"
+            android:src="@drawable/loading_animation"/>
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

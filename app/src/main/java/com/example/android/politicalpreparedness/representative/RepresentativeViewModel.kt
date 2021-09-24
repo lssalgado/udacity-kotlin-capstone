@@ -31,6 +31,7 @@ class RepresentativeViewModel: ViewModel() {
             val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(address.toFormattedString())
             Timber.e(offices.toString())
             Timber.e(officials.toString())
+            _loading.value = false
             _representatives.value =
                 offices.flatMap { office -> office.getRepresentatives(officials) }
             representatives.value!!.forEach {
