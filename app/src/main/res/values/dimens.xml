@@ -12,6 +12,4 @@
     <!-- Representative Photo-->
     <dimen name="representative_photo_size">64dp</dimen>
 
-    <!-- TODO: Add necessary dimension values -->s
-
 </resources>
