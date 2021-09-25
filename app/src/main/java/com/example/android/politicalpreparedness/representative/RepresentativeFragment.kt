@@ -274,10 +274,10 @@ class DetailFragment : Fragment() {
     private fun startResolution(exception: ResolvableApiException) {
         try {
             startIntentSenderForResult(exception.resolution.intentSender, REQUEST_TURN_DEVICE_LOCATION_ON, null, 0, 0, 0, null)
-        } catch (sendEx: IntentSender.SendIntentException) {
-            val msg = "Error getting location settings resolution"
+        } catch (e: IntentSender.SendIntentException) {
+            val msg = getString(R.string.error_location_settings_resolution)
             showToast(msg)
-            Timber.e(sendEx, msg)
+            Timber.e(e)
         }
     }
 
@@ -308,7 +308,16 @@ class DetailFragment : Fragment() {
             viewModel.getRepresentatives(address)
         } catch (e: IOException) {
             Timber.e(e)
-            showToast(e.message ?: "An IOException when trying to get the device's location!!")
+            showToast(e.message ?: getString(R.string.device_location_ioexception))
+        } catch (e: IllegalStateException) {
+            // This is thrown if the current location is not in the USA.
+            Timber.e(e)
+            val msg = if (e.message != null) {
+                getString(R.string.error_reading_location_data, e.message)
+            } else {
+                getString(R.string.could_not_convert_location)
+            }
+            showToast(msg)
         }
     }
 
