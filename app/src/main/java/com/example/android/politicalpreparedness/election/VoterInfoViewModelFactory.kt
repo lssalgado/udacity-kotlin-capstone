@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.repository.ElectionRepository
 
-//TODO: Create Factory to generate VoterInfoViewModel with provided election datasource
 class VoterInfoViewModelFactory(
     private val application: Application,
     private val electionId: Int,

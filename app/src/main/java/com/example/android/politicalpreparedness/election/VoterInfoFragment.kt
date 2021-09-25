@@ -20,7 +20,7 @@ class VoterInfoFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = FragmentVoterInfoBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
@@ -64,19 +64,12 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
-        //TODO: Add binding values
-
-        //TODO: Populate voter info -- hide views without provided data.
-        /**
-        Hint: You will need to ensure proper data is provided from previous fragment.
-        */
-
-
-        //TODO: Handle loading of URLs
-
-        //TODO: Handle save button UI state
-        //TODO: cont'd Handle save button clicks
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getVoterInfo()
     }
 
     private fun showHttpErrorToast(code: Int) {
@@ -89,7 +82,6 @@ class VoterInfoFragment : Fragment() {
         toast.show()
     }
 
-    //TODO: Create method to load URL intents
     private fun startUrlIntent(url: String) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(browserIntent)

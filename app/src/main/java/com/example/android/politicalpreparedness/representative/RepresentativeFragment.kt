@@ -27,7 +27,6 @@ import com.example.android.politicalpreparedness.network.Result
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListener
-import com.example.android.politicalpreparedness.representative.adapter.setNewValue
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -71,17 +70,15 @@ class DetailFragment : Fragment() {
         requireContext().resources.getStringArray(R.array.states)
     }
 
-    //TODO: Declare ViewModel
     private lateinit var viewModel: RepresentativeViewModel
 
     private var resolve = true
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = FragmentRepresentativeBinding.inflate(inflater)
         binding.lifecycleOwner = this
-        //TODO: Establish bindings
 
         // Disables the animation while the recyclerview is not filled
         binding.motionLayout.getTransition(R.id.representative_transition).setEnable(false)
@@ -92,8 +89,8 @@ class DetailFragment : Fragment() {
 
         val listener = RepresentativeListener { representative ->
             Timber.e(representative.toString())
-            Timber.e("TODO implement RepresentativeListener!!")
         }
+
         val adapter = RepresentativeListAdapter(listener)
         binding.representativeList.adapter = adapter
 
@@ -150,11 +147,6 @@ class DetailFragment : Fragment() {
             }
         })
 
-        //TODO: Define and assign Representative adapter
-
-        //TODO: Populate Representative adapter
-
-        //TODO: Establish button listeners for field and location search
         return binding.root
     }
 
@@ -170,7 +162,6 @@ class DetailFragment : Fragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        //TODO: Handle location permission result to get location on permission granted
         if (requestCode == REQUEST_LOCATION_PERMISSION_ID) {
             val missingPermissions = permissions.toCollection(ArrayList())
             permissions.forEach { permission ->
@@ -230,8 +221,6 @@ class DetailFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun getLocation() {
-        //TODO: Get location from LocationServices
-        //TODO: The geoCodeLocation method is a helper function to change the lat/long location to a human readable street address
         // Based on:
         // https://classroom.udacity.com/courses/ud940/lessons/517042a4-d6f0-40f1-90c9-8ec5c7677097/concepts/320bc835-4cb9-406f-b60e-7cb671471ea1
         val location: Location? =

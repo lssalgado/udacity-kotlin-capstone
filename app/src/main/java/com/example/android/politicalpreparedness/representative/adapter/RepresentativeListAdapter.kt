@@ -43,9 +43,6 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
             showWWWLinks(it)
         }
 
-        //TODO: Show social links ** Hint: Use provided helper methods
-        //TODO: Show www link ** Hint: Use provided helper methods
-
         binding.executePendingBindings()
     }
 
@@ -94,8 +91,6 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
 
 }
 
-//TODO: Create RepresentativeDiffCallback
-//TODO: Validate this class
 class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
     override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
         return oldItem === newItem
@@ -107,8 +102,6 @@ class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
 }
 
 
-//TODO: Create RepresentativeListener
-//TODO: Validate this class
 class RepresentativeListener(val listener: (representative: Representative) -> Unit) {
     fun onClick(representative: Representative) = listener(representative)
 }

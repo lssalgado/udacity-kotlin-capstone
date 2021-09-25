@@ -30,11 +30,10 @@ class VoterInfoViewModel(
     val election = MediatorLiveData<Election>()
 
     init {
-        getVoterInfo()
         election.addSource(repository.getElectionById(electionId), election::setValue)
     }
 
-    private fun getVoterInfo() {
+    fun getVoterInfo() {
         viewModelScope.launch {
             try {
                 val voterInfo = CivicsApi.retrofitService.getVoterInfo(
@@ -57,11 +56,6 @@ class VoterInfoViewModel(
         }
     }
 
-    //TODO: Add live data to hold voter info
-
-    //TODO: Add var and methods to populate voter info
-
-    //TODO: Add var and methods to support loading URLs
     private val _urlToLoad = MutableLiveData<String>()
     val urlToLoad: LiveData<String>
         get() = _urlToLoad

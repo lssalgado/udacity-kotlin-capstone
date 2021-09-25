@@ -25,7 +25,7 @@ class ElectionsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentElectionBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
