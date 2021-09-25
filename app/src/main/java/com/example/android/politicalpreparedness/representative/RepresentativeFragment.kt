@@ -276,8 +276,6 @@ class DetailFragment : Fragment() {
     private fun startResolution(exception: ResolvableApiException) {
         try {
             startIntentSenderForResult(exception.resolution.intentSender, REQUEST_TURN_DEVICE_LOCATION_ON, null, 0, 0, 0, null)
-//            exception.startResolutionForResult(requireActivity(),
-//                REQUEST_TURN_DEVICE_LOCATION_ON)
         } catch (sendEx: IntentSender.SendIntentException) {
             Timber.e(sendEx, "Error getting location settings resolution: ")
         }
