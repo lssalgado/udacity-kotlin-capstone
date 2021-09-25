@@ -50,10 +50,10 @@ To get started with this project, simply pull the repository and import the proj
   - [x] This will require edits to Gradle.
   - [x] You will need to create a file to complete the step.
 - [ ] Remove all TODOs from the code.
-- [ ] Remove all non error debug logs.
+- [x] Remove all non error debug logs.
 - [ ] Fix Representatives fragment on landscape mode.
 - [ ] Fix VoterInfo links.
-- [ ] Extract resources.
+- [x] Extract resources.
 
 
 ## Rubric

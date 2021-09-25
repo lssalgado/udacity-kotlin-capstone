@@ -5,6 +5,7 @@
     <color name="colorAccent">@color/secondaryColor</color>
     <color name="white">#FFFFFF</color>
     <color name="gray50">#7F7F7F</color>
+    <color name="red">#B71C1C</color>
 
     <color name="primaryColor">#757575</color>
     <color name="primaryLightColor">#a4a4a4</color>
