@@ -23,6 +23,8 @@
     <string name="could_not_fetch_elections">Could not fetch Elections from the API!!\n Error code: %d</string>
     <string name="could_not_fetch_voter_info">Could not fetch VoterInfo from the API!!\n Error code: %d</string>
     <string name="could_not_fetch_representatives">Could not fetch Representatives from the API!!\n Error code: %d</string>
+    <string name="location_needed">Location services must be enabled for this functionality.</string>
+    <string name="enable_location">Location\nSettings</string>
 
     <!-- TODO: Add necessary string values -->
 

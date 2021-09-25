@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
@@ -27,12 +28,14 @@ import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListener
 import com.example.android.politicalpreparedness.representative.adapter.setNewValue
+import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import java.io.IOException
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.first
@@ -46,6 +49,7 @@ class DetailFragment : Fragment() {
 
     companion object {
         const val REQUEST_LOCATION_PERMISSION_ID = 1001
+        private const val REQUEST_TURN_DEVICE_LOCATION_ON = 1002
     }
 
     private lateinit var toast: Toast
@@ -70,6 +74,8 @@ class DetailFragment : Fragment() {
 
     //TODO: Declare ViewModel
     private lateinit var viewModel: RepresentativeViewModel
+
+    private var resolve = true
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -226,6 +232,8 @@ class DetailFragment : Fragment() {
     private fun getLocation() {
         //TODO: Get location from LocationServices
         //TODO: The geoCodeLocation method is a helper function to change the lat/long location to a human readable street address
+        // Based on:
+        // https://classroom.udacity.com/courses/ud940/lessons/517042a4-d6f0-40f1-90c9-8ec5c7677097/concepts/320bc835-4cb9-406f-b60e-7cb671471ea1
         val location: Location? =
             locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         if (location != null) {
@@ -247,7 +255,38 @@ class DetailFragment : Fragment() {
                     minDistance,
                     locationListener
                 )
+            }.addOnFailureListener { exception ->
+                if (exception is ResolvableApiException){
+                    if (resolve) {
+                        resolve = false
+                        startResolution(exception)
+                    } else {
+                        Snackbar.make(
+                            binding.root,
+                            R.string.location_needed, Snackbar.LENGTH_LONG
+                        ).setAction(R.string.enable_location) {
+                            startResolution(exception)
+                        }.show()
+                    }
+                }
             }
+        }
+    }
+
+    private fun startResolution(exception: ResolvableApiException) {
+        try {
+            startIntentSenderForResult(exception.resolution.intentSender, REQUEST_TURN_DEVICE_LOCATION_ON, null, 0, 0, 0, null)
+//            exception.startResolutionForResult(requireActivity(),
+//                REQUEST_TURN_DEVICE_LOCATION_ON)
+        } catch (sendEx: IntentSender.SendIntentException) {
+            Timber.e(sendEx, "Error getting location settings resolution: ")
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_TURN_DEVICE_LOCATION_ON) {
+            getLocation()
         }
     }
 
