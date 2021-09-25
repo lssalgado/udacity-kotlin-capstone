@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.android.politicalpreparedness.representative.RepresentativeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motion_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/padding_normal"
+        app:layoutDescription="@xml/representative_motion_scene">
+
+        <TextView
+            android:id="@+id/search_title"
+            style="@style/TextHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/representative_search"
+            />
+
+        <EditText
+            android:id="@+id/address_line_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/street"
+            android:inputType="textPostalAddress"
+            android:singleLine="true"
+            android:text="@={viewModel.address.line1}"
+            tools:text="Amphitheatre Parkway" />
+
+        <EditText
+            android:id="@+id/address_line_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/number"
+            android:inputType="textPostalAddress"
+            android:singleLine="true"
+            android:text="@={viewModel.address.line2}"
+            tools:text="1600" />
+
+        <EditText
+            android:id="@+id/zip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/zip_code"
+            android:inputType="number"
+            android:maxLength="5"
+            android:singleLine="true"
+            android:text="@={viewModel.address.zip}"
+            tools:text="94043" />
+
+        <EditText
+            android:id="@+id/city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/city"
+            android:inputType="textPostalAddress"
+            android:singleLine="true"
+            android:text="@={viewModel.address.city}"
+            tools:text="Mountain View" />
+
+        <Spinner
+            android:id="@+id/state"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:autofillHints=""
+            android:entries="@array/states"
+            android:inputType="textPostalAddress"
+            app:stateValue="@{viewModel.address.state}" />
+
+        <Button
+            android:id="@+id/button_search"
+            style="@style/ButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/find_my_representatives"
+            />
+
+        <Button
+            android:id="@+id/button_location"
+            style="@style/ButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/use_my_location"
+            />
+
+        <TextView
+            android:id="@+id/representative_title"
+            style="@style/TextHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/my_representatives"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/representative_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
+
+        <ImageView
+            android:id="@+id/loading_img"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/loading_representatives"
+            android:src="@drawable/loading_animation"
+            android:visibility="invisible"
+            />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>
