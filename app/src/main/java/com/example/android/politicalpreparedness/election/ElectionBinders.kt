@@ -32,7 +32,7 @@ fun TextView.setTextAndIcon(url: String?, stringId: Int, drawableId: Int, missin
     if (url != null) {
         setText(stringId)
         setCompoundDrawablesWithIntrinsicBounds(context.getDrawable(drawableId), null, null, null)
-        setTextColor(context.getColor(R.color.white))
+        setTextColor(context.getColor(R.color.primaryTextColor))
     } else {
         setText(missingStringId)
         setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)

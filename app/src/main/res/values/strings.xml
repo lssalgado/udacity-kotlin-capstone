@@ -35,4 +35,5 @@
     <string name="location_needed">Location services must be enabled for this functionality.</string>
     <string name="missing_election">The election could not be loaded!!</string>
     <string name="missing_state">Election\'s State could not be loaded!!</string>
+    <string name="election_information">Election Information</string>
 </resources>
