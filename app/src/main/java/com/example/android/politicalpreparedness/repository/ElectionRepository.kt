@@ -27,7 +27,6 @@ class ElectionRepository(val context: Context) {
             val response = CivicsApi.retrofitService.getElections()
             _result.value = Result.Success
             withContext(Dispatchers.IO) {
-                Timber.e(response.toString())
                 val newElections = response.elections.toTypedArray()
                 deleteOldNonSavedElections(newElections)
                 database.electionDao.insertAll(*newElections)

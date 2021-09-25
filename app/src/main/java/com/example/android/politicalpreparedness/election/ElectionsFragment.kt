@@ -14,7 +14,6 @@ import com.example.android.politicalpreparedness.databinding.FragmentElectionBin
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.election.adapter.ElectionListener
 import com.example.android.politicalpreparedness.network.Result
-import timber.log.Timber
 
 class ElectionsFragment: Fragment() {
 
@@ -44,7 +43,6 @@ class ElectionsFragment: Fragment() {
         binding.upcomingElections.adapter = currentElectionsAdapter
         viewModel.currentElections.observe(viewLifecycleOwner, Observer { elections ->
             elections?.let {
-                Timber.e("CurrentElections = ${it.joinToString("\n")}")
                 if (it.isNotEmpty()) {
                     binding.upcomingLoading.visibility = View.INVISIBLE
                 }
@@ -56,7 +54,6 @@ class ElectionsFragment: Fragment() {
         binding.savedElections.adapter = savedElectionsAdapter
         viewModel.savedElections.observe(viewLifecycleOwner, Observer { elections ->
             elections?.let {
-                Timber.e("SavedElections = ${it.joinToString("\n")}")
                 binding.savedLoading.visibility = View.INVISIBLE
                 savedElectionsAdapter.submitList(it)
             }

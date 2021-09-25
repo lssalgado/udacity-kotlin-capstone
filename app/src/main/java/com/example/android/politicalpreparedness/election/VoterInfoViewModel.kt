@@ -30,8 +30,6 @@ class VoterInfoViewModel(
     val election = MediatorLiveData<Election>()
 
     init {
-        Timber.e("ElectionId = $electionId")
-        Timber.e("Division = $division")
         getVoterInfo()
         election.addSource(repository.getElectionById(electionId), election::setValue)
     }
@@ -43,7 +41,6 @@ class VoterInfoViewModel(
                     "${division.country}, ${division.state}",
                     electionId
                 )
-                Timber.e(voterInfo.toString())
                 _voterInfo.value = voterInfo
                 if (voterInfo.state != null && voterInfo.state.isNotEmpty()) {
                     _state.value = voterInfo.state[0]

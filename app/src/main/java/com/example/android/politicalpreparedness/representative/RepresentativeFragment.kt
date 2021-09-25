@@ -35,7 +35,6 @@ import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import java.io.IOException
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.first
@@ -109,7 +108,6 @@ class DetailFragment : Fragment() {
 
         viewModel.representatives.observe(viewLifecycleOwner, Observer { representatives ->
             representatives?.let {
-                Timber.e("Representatives = ${it.joinToString("\n")}")
                 adapter.submitList(it)
                 binding.motionLayout.getTransition(R.id.representative_transition).setEnable(true)
             }
@@ -277,7 +275,9 @@ class DetailFragment : Fragment() {
         try {
             startIntentSenderForResult(exception.resolution.intentSender, REQUEST_TURN_DEVICE_LOCATION_ON, null, 0, 0, 0, null)
         } catch (sendEx: IntentSender.SendIntentException) {
-            Timber.e(sendEx, "Error getting location settings resolution: ")
+            val msg = "Error getting location settings resolution"
+            showToast(msg)
+            Timber.e(sendEx, msg)
         }
     }
 

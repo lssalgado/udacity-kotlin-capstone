@@ -40,14 +40,9 @@ class RepresentativeViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(address.toFormattedString())
-                Timber.e(offices.toString())
-                Timber.e(officials.toString())
                 _loading.value = false
                 _representatives.value =
                     offices.flatMap { office -> office.getRepresentatives(officials) }
-                representatives.value!!.forEach {
-                    Timber.e(it.toString())
-                }
             } catch (e: HttpException) {
                 Timber.e(e)
                 _result.value = Result.HttpError(e.code())
