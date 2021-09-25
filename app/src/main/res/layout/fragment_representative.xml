@@ -22,9 +22,7 @@
             style="@style/TextHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/representative_search"
-            app:layout_constraintBottom_toTopOf="@id/address_line_1"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/representative_search" />
 
         <EditText
             android:id="@+id/address_line_1"
@@ -35,8 +33,6 @@
             android:inputType="textPostalAddress"
             android:singleLine="true"
             android:text="@={viewModel.address.line1}"
-            app:layout_constraintBottom_toTopOf="@id/address_line_2"
-            app:layout_constraintTop_toBottomOf="@id/search_title"
             tools:text="Amphitheatre Parkway" />
 
         <EditText
@@ -48,8 +44,6 @@
             android:inputType="textPostalAddress"
             android:singleLine="true"
             android:text="@={viewModel.address.line2}"
-            app:layout_constraintBottom_toTopOf="@id/city"
-            app:layout_constraintTop_toBottomOf="@id/address_line_1"
             tools:text="1600" />
 
         <EditText
@@ -61,10 +55,6 @@
             android:inputType="textPostalAddress"
             android:singleLine="true"
             android:text="@={viewModel.address.city}"
-            app:layout_constraintBottom_toTopOf="@id/zip"
-            app:layout_constraintEnd_toStartOf="@id/state"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/address_line_2"
             tools:text="Mountain View" />
 
         <Spinner
@@ -74,10 +64,6 @@
             android:autofillHints=""
             android:entries="@array/states"
             android:inputType="textPostalAddress"
-            app:layout_constraintBottom_toBottomOf="@id/city"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/city"
-            app:layout_constraintTop_toTopOf="@id/city"
             app:stateValue="@{viewModel.address.state}" />
 
         <EditText
@@ -90,10 +76,6 @@
             android:maxLength="5"
             android:singleLine="true"
             android:text="@={viewModel.address.zip}"
-            app:layout_constraintBottom_toTopOf="@id/button_search"
-            app:layout_constraintEnd_toEndOf="@id/city"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/city"
             tools:text="94043" />
 
         <Button
@@ -101,27 +83,21 @@
             style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/find_my_representatives"
-            app:layout_constraintBottom_toTopOf="@id/button_location"
-            app:layout_constraintTop_toBottomOf="@id/zip" />
+            android:text="@string/find_my_representatives" />
 
         <Button
             android:id="@+id/button_location"
             style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/use_my_location"
-            app:layout_constraintBottom_toTopOf="@id/representative_title"
-            app:layout_constraintTop_toBottomOf="@id/button_search" />
+            android:text="@string/use_my_location" />
 
         <TextView
             android:id="@+id/representative_title"
             style="@style/TextHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/my_representatives"
-            app:layout_constraintBottom_toTopOf="@id/representative_list"
-            app:layout_constraintTop_toBottomOf="@id/button_location" />
+            android:text="@string/my_representatives" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/representative_list"
@@ -129,10 +105,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:textAlignment="center"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/representative_title"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <ImageView
             android:id="@+id/loading_img"
@@ -141,9 +114,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/loading_representatives"
             android:src="@drawable/loading_animation"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@id/representative_list"
-            app:layout_constraintTop_toTopOf="@id/representative_list" />
+            android:visibility="invisible" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

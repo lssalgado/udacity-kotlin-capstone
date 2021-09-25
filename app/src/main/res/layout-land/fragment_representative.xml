@@ -22,8 +22,7 @@
             style="@style/TextHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/representative_search"
-            />
+            android:text="@string/representative_search" />
 
         <EditText
             android:id="@+id/address_line_1"
@@ -84,24 +83,21 @@
             style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/find_my_representatives"
-            />
+            android:text="@string/find_my_representatives" />
 
         <Button
             android:id="@+id/button_location"
             style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/use_my_location"
-            />
+            android:text="@string/use_my_location" />
 
         <TextView
             android:id="@+id/representative_title"
             style="@style/TextHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/my_representatives"
-            />
+            android:text="@string/my_representatives" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/representative_list"
@@ -109,8 +105,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:textAlignment="center"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <ImageView
             android:id="@+id/loading_img"
@@ -119,8 +114,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/loading_representatives"
             android:src="@drawable/loading_animation"
-            android:visibility="invisible"
-            />
+            android:visibility="invisible" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
