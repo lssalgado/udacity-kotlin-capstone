@@ -14,58 +14,75 @@
         <TextView
             android:id="@+id/upcoming_elections_header"
             style="@style/TextHeader"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:gravity="center"
             android:text="@string/upcoming_elections"
+            app:layout_constraintEnd_toStartOf="@id/saved_elections_header"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/upcoming_elections"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_small"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/saved_elections_header"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/saved_elections"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/upcoming_elections_header" />
 
         <ImageView
             android:id="@+id/upcoming_loading"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="false"
             android:contentDescription="@string/loading_elections"
             android:src="@drawable/loading_animation"
             app:layout_constraintBottom_toBottomOf="@id/upcoming_elections"
+            app:layout_constraintEnd_toEndOf="@id/upcoming_elections"
+            app:layout_constraintStart_toStartOf="@id/upcoming_elections"
             app:layout_constraintTop_toTopOf="@id/upcoming_elections" />
 
         <TextView
             android:id="@+id/saved_elections_header"
             style="@style/TextHeader"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:gravity="center"
             android:text="@string/saved_elections"
-            app:layout_constraintBottom_toTopOf="@id/saved_elections"
-            app:layout_constraintTop_toBottomOf="@id/upcoming_elections" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/upcoming_elections_header"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/saved_elections"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_normal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/upcoming_elections"
             app:layout_constraintTop_toBottomOf="@id/saved_elections_header" />
 
         <ImageView
             android:id="@+id/saved_loading"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="false"
             android:contentDescription="@string/loading_elections"
             android:src="@drawable/loading_animation"
             app:layout_constraintBottom_toBottomOf="@id/saved_elections"
+            app:layout_constraintEnd_toEndOf="@id/saved_elections"
+            app:layout_constraintStart_toStartOf="@id/saved_elections"
             app:layout_constraintTop_toTopOf="@id/saved_elections" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
