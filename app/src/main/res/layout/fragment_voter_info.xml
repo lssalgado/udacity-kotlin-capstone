@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Add data binding node for Voter Info ViewModel -->
     <data>
 
         <variable
@@ -39,9 +38,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <!-- TODO: Add title to toolbar -->
 
-                <!-- TODO: Add visual styling -->
                 <TextView
                     android:id="@+id/election_date"
                     android:layout_width="match_parent"
@@ -52,7 +49,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="12 November 2055" />
 
-                <!-- TODO: Add visual styling and content -->
                 <TextView
                     android:id="@+id/state_header"
                     style="@style/TextHeader"
@@ -63,8 +59,6 @@
                     android:text="@string/election_information"
                     app:layout_constraintTop_toBottomOf="@id/election_date" />
 
-                <!-- TODO: Add click binding to open web URL -->
-                <!-- TODO: Add visual styling and content -->
                 <TextView
                     android:id="@+id/state_locations"
                     android:layout_width="match_parent"
@@ -76,8 +70,6 @@
                     app:stateLocationText="@{viewModel.state}"
                     tools:text="@string/voting_locations" />
 
-                <!-- TODO: Add click binding to open web URL -->
-                <!-- TODO: Add visual styling and content -->
                 <TextView
                     android:id="@+id/state_ballot"
                     android:layout_width="match_parent"
@@ -95,7 +87,6 @@
                     android:layout_height="wrap_content"
                     app:constraint_referenced_ids="state_correspondence_header,address" />
 
-                <!-- TODO: Add visual styling and content -->
                 <TextView
                     android:id="@+id/state_correspondence_header"
                     style="@style/TextHeader"
@@ -106,7 +97,6 @@
                     android:text="@string/correspondence_address"
                     app:layout_constraintTop_toBottomOf="@id/state_ballot" />
 
-                <!-- TODO: Add data binding -->
                 <TextView
                     android:id="@+id/address"
                     android:layout_width="match_parent"
@@ -117,7 +107,6 @@
                     app:layout_constraintTop_toBottomOf="@id/state_correspondence_header"
                     tools:text="Po Box 53156\nOklahoma City, Oklahoma 73152" />
 
-                <!-- TODO: Add button to save election to Room -->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
