@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
-            android:padding="@dimen/default_padding"
+            android:padding="@dimen/padding_default"
             android:singleLine="true"
             android:text="@string/app_name"
             app:layout_constraintTop_toTopOf="parent"
@@ -113,10 +113,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_normal"
             android:onClick="@{() -> viewModel.onFollowClick()}"
-            android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:saveButtonText="@{viewModel.election}"
-            tools:text="@string/follow_election" />
+            tools:text="@string/follow_election"
+            style="@style/ButtonStyle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

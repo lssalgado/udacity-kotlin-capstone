@@ -36,4 +36,14 @@
     <string name="missing_election">The election could not be loaded!!</string>
     <string name="missing_state">Election\'s State could not be loaded!!</string>
     <string name="election_information">Election Information</string>
+    <string name="street">Street</string>
+    <string name="number">Number</string>
+    <string name="city">City</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="loading_representatives">Loading Representatives</string>
+    <string name="form_missing_city">Please fill the City name</string>
+    <string name="form_missing_street">Please fill the Street name</string>
+    <string name="form_missing_street_number">Please fill the Street Number</string>
+    <string name="form_missing_state">Please select a State</string>
+    <string name="form_missing_zip">Please fill the Zip Code</string>
 </resources>

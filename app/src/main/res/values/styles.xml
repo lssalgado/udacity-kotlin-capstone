@@ -16,6 +16,10 @@
         <item name="android:textColor">@color/headerTextColor</item>
     </style>
 
+    <style name="ButtonStyle">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
     <!-- TODO: Add necessary styles -->
 
 </resources>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:motion="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Add data binding node -->
     <data>
 
         <variable
@@ -11,125 +10,119 @@
             type="com.example.android.politicalpreparedness.representative.RepresentativeViewModel" />
     </data>
 
-    <!-- TODO: Add motion scene to hide form on vertical scroll. -->
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/motion_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/padding_normal"
         app:layoutDescription="@xml/representative_motion_scene">
 
-        <!-- TODO: Add visual styling and content -->
         <TextView
             android:id="@+id/search_title"
+            style="@style/TextHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/representative_search"
             app:layout_constraintBottom_toTopOf="@id/address_line_1"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- TODO: Add data binding value -->
-        <!-- TODO: Add visual styling and content -->
         <EditText
             android:id="@+id/address_line_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="address line 1"
-            android:hint="address line 1"
+            android:autofillHints=""
+            android:hint="@string/street"
             android:inputType="textPostalAddress"
+            android:singleLine="true"
+            android:text="@={viewModel.address.line1}"
             app:layout_constraintBottom_toTopOf="@id/address_line_2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_title" />
+            app:layout_constraintTop_toBottomOf="@id/search_title"
+            tools:text="Amphitheatre Parkway" />
 
-        <!-- TODO: Add data binding value -->
-        <!-- TODO: Add visual styling and content -->
         <EditText
             android:id="@+id/address_line_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="address line 2"
-            android:hint="address line 2"
+            android:autofillHints=""
+            android:hint="@string/number"
             android:inputType="textPostalAddress"
+            android:singleLine="true"
+            android:text="@={viewModel.address.line2}"
             app:layout_constraintBottom_toTopOf="@id/city"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/address_line_1" />
+            app:layout_constraintTop_toBottomOf="@id/address_line_1"
+            tools:text="1600" />
 
-        <!-- TODO: Add data binding value -->
-        <!-- TODO: Add visual styling and content -->
         <EditText
             android:id="@+id/city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:autofillHints="city"
-            android:hint="city"
+            android:autofillHints=""
+            android:hint="@string/city"
             android:inputType="textPostalAddress"
+            android:singleLine="true"
+            android:text="@={viewModel.address.city}"
             app:layout_constraintBottom_toTopOf="@id/zip"
             app:layout_constraintEnd_toStartOf="@id/state"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/address_line_2" />
+            app:layout_constraintTop_toBottomOf="@id/address_line_2"
+            tools:text="Mountain View" />
 
-        <!-- TODO: Add default values from provided resources  -->
-        <!-- TODO: Add data binding value -->
-        <!-- TODO: Add visual styling and content -->
         <Spinner
             android:id="@+id/state"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:autofillHints="state"
+            android:autofillHints=""
             android:entries="@array/states"
             android:inputType="textPostalAddress"
             app:layout_constraintBottom_toBottomOf="@id/city"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/city"
-            app:layout_constraintTop_toTopOf="@id/city" />
+            app:layout_constraintTop_toTopOf="@id/city"
+            app:stateValue="@{viewModel.address.state}" />
 
-        <!-- TODO: Add data binding value -->
-        <!-- TODO: Add visual styling and content -->
         <EditText
             android:id="@+id/zip"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:autofillHints="zip"
-            android:hint="zip"
+            android:autofillHints=""
+            android:hint="@string/zip_code"
             android:inputType="number"
             android:maxLength="5"
+            android:singleLine="true"
+            android:text="@={viewModel.address.zip}"
             app:layout_constraintBottom_toTopOf="@id/button_search"
             app:layout_constraintEnd_toEndOf="@id/city"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/city" />
+            app:layout_constraintTop_toBottomOf="@id/city"
+            tools:text="94043" />
 
-        <!-- TODO: Add visual styling and label -->
         <Button
             android:id="@+id/button_search"
+            style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/find_my_representatives"
-            android:textAllCaps="false"
             app:layout_constraintBottom_toTopOf="@id/button_location"
             app:layout_constraintTop_toBottomOf="@id/zip" />
 
-        <!-- TODO: Add visual styling and content -->
         <Button
             android:id="@+id/button_location"
+            style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/use_my_location"
-            android:textAllCaps="false"
             app:layout_constraintBottom_toTopOf="@id/representative_title"
             app:layout_constraintTop_toBottomOf="@id/button_search" />
 
-        <!-- TODO: Add visual styling and content -->
         <TextView
             android:id="@+id/representative_title"
+            style="@style/TextHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/my_representatives"
             app:layout_constraintBottom_toTopOf="@id/representative_list"
             app:layout_constraintTop_toBottomOf="@id/button_location" />
 
-        <!-- TODO: Add Representatives RecyclerView -->
-
-        <!-- TODO: Add visual styling and content -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/representative_list"
             android:layout_width="match_parent"
@@ -146,6 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/loading_representatives"
             android:src="@drawable/loading_animation"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/representative_list"

@@ -88,6 +88,8 @@ class DetailFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(RepresentativeViewModel::class.java)
 
+        binding.viewModel = viewModel
+
         val listener = RepresentativeListener { representative ->
             Timber.e(representative.toString())
             Timber.e("TODO implement RepresentativeListener!!")
@@ -300,11 +302,6 @@ class DetailFragment : Fragment() {
     private fun updateViewsWithLocation(location: Location) {
         try {
             val address = geoCodeLocation(location)
-            binding.addressLine1.setText(address.line1)
-            binding.addressLine2.setText(address.line2)
-            binding.city.setText(address.city)
-            binding.zip.setText(address.zip)
-            binding.state.setNewValue(address.state)
             viewModel.getRepresentatives(address)
         } catch (e: IOException) {
             Timber.e(e)
@@ -323,14 +320,8 @@ class DetailFragment : Fragment() {
 
     private fun onFindMyRepresentativesClick() {
         val state = statesArray[binding.state.selectedItemId.toInt()]
-        val address = Address(
-            binding.addressLine1.text.toString(),
-            binding.addressLine2.text.toString(),
-            binding.city.text.toString(),
-            state,
-            binding.zip.text.toString()
-        )
-        viewModel.getRepresentatives(address)
+        viewModel.address.value?.state = state
+        viewModel.getRepresentatives()
     }
 
     private fun hideKeyboard() {
