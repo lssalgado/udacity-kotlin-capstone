@@ -15,15 +15,17 @@ import com.example.android.politicalpreparedness.election.adapter.ElectionListAd
 import com.example.android.politicalpreparedness.election.adapter.ElectionListener
 import com.example.android.politicalpreparedness.network.Result
 
-class ElectionsFragment: Fragment() {
+class ElectionsFragment : Fragment() {
 
     private lateinit var viewModel: ElectionsViewModel
     private lateinit var binding: FragmentElectionBinding
     private lateinit var toast: Toast
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentElectionBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
@@ -31,14 +33,15 @@ class ElectionsFragment: Fragment() {
         viewModel =
             ViewModelProvider(this, viewModelFactory).get(ElectionsViewModel::class.java)
 
-        //TODO: Add binding values
-
-        //TODO: Link elections to voter info
-
-        //TODO: Initiate recycler adapters
         val listener = ElectionListener { election ->
-            findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division))
+            findNavController().navigate(
+                ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
+                    election.id,
+                    election.division
+                )
+            )
         }
+
         val currentElectionsAdapter = ElectionListAdapter(listener)
         binding.upcomingElections.adapter = currentElectionsAdapter
         viewModel.currentElections.observe(viewLifecycleOwner, Observer { elections ->
@@ -61,7 +64,7 @@ class ElectionsFragment: Fragment() {
 
         viewModel.result.observe(viewLifecycleOwner, Observer { result ->
             result?.let {
-                when(it) {
+                when (it) {
                     is Result.Error -> {
                         showToast(it.msg)
                         viewModel.onResultHandled()
@@ -77,11 +80,13 @@ class ElectionsFragment: Fragment() {
             }
         })
 
-        //TODO: Populate recycler adapters
         return binding.root
     }
 
-    //TODO: Refresh adapters when fragment loads
+    override fun onResume() {
+        super.onResume()
+        viewModel.getElections()
+    }
 
     private fun showToast(msg: String) {
         if (::toast.isInitialized) {

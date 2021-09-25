@@ -8,12 +8,8 @@ import kotlinx.coroutines.launch
 //TODO: Construct ViewModel and provide election datasource
 class ElectionsViewModel(private val repository: ElectionRepository): ViewModel() {
 
-    init {
-        getElections()
-    }
-
     //TODO: Create live data val for upcoming elections
-    private fun getElections() {
+    fun getElections() {
         viewModelScope.launch {
             repository.refreshElections()
         }
