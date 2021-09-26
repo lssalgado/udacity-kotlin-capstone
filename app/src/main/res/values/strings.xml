@@ -7,7 +7,7 @@
     <string name="find_my_representatives">Find My Representatives</string>
     <string name="political_preparedness_logo">Political Preparedness Logo</string>
 
-    <!-- Election Frament -->
+    <!-- Election Fragment -->
     <string name="loading_elections">Loading Elections</string>
     <string name="saved_elections">Saved Elections</string>
 
@@ -16,7 +16,7 @@
     <string name="follow_election">Follow Election</string>
     <string name="unfollow_election">Unfollow Election</string>
     <string name="voting_locations">Voting Locations</string>
-    <string name="ballot_informations">Ballot Informations</string>
+    <string name="ballot_information">Ballot Information</string>
     <string name="election_information">Election Information</string>
     <string name="loading_election_information">Loading Election Information</string>
     <string name="loading_correspondence_address">Loading Correspondence Address</string>
@@ -33,6 +33,10 @@
     <string name="city">City</string>
     <string name="zip_code">Zip Code</string>
     <string name="loading_representatives">Loading Representatives</string>
+    <string name="representative_photo">Representative Photo</string>
+    <string name="webpage_icon">Webpage Icon</string>
+    <string name="facebook_icon">Facebook Icon</string>
+    <string name="twitter_icon">Twitter Icon</string>
 
     <!-- Incomplete Form messages -->
     <string name="form_missing_city">Please fill the City name</string>
@@ -43,7 +47,7 @@
 
     <!-- Missing VoterInfo Data messages-->
     <string name="missing_voting_locations">Missing voting locations URL</string>
-    <string name="missing_ballot_informations">Missing ballot informations URL</string>
+    <string name="missing_ballot_information">Missing ballot information URL</string>
     <string name="missing_address">Missing Correspondence Address</string>
     <string name="missing_url">Missing URL!!</string>
 

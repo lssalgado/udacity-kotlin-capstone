@@ -25,7 +25,7 @@ fun TextView.setLocationTextAndIcon(state: State?) {
 @BindingAdapter("stateBallotText")
 fun TextView.setBallotTextAndIcon(state: State?) {
     val ballotInfoUrl: String? = state?.electionAdministrationBody?.ballotInfoUrl
-    setTextAndIcon(ballotInfoUrl, R.string.ballot_informations, R.drawable.ic_how_to_vote, R.string.missing_ballot_informations)
+    setTextAndIcon(ballotInfoUrl, R.string.ballot_information, R.drawable.ic_how_to_vote, R.string.missing_ballot_information)
 }
 
 fun TextView.setTextAndIcon(url: String?, stringId: Int, drawableId: Int, missingStringId: Int) {

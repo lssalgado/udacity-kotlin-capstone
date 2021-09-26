@@ -79,7 +79,7 @@
                     android:onClick="@{() -> viewModel.onUrlClick(viewModel.state.electionAdministrationBody.ballotInfoUrl)}"
                     app:layout_constraintTop_toBottomOf="@id/state_locations"
                     app:stateBallotText="@{viewModel.state}"
-                    tools:text="@string/ballot_informations" />
+                    tools:text="@string/ballot_information" />
 
                 <ImageView
                     android:id="@+id/loading_election_information"
