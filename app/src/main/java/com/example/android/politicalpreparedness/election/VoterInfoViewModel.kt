@@ -1,7 +1,6 @@
 package com.example.android.politicalpreparedness.election
 
 import androidx.lifecycle.*
-import com.example.android.politicalpreparedness.BuildConfig
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Division
@@ -10,17 +9,23 @@ import com.example.android.politicalpreparedness.network.models.State
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import com.example.android.politicalpreparedness.repository.ElectionRepository
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import timber.log.Timber
+import com.example.android.politicalpreparedness.network.Result
 
 class VoterInfoViewModel(
     private val repository: ElectionRepository,
     private val electionId: Int,
-    val division: Division
+    private val division: Division
 ) : ViewModel() {
 
     private val _voterInfo = MutableLiveData<VoterInfoResponse>()
     val voterInfo: LiveData<VoterInfoResponse>
         get() = _voterInfo
+
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean>
+        get() = _loading
 
     private val _state = MutableLiveData<State>()
     val state: LiveData<State>
@@ -29,33 +34,35 @@ class VoterInfoViewModel(
     val election = MediatorLiveData<Election>()
 
     init {
-        Timber.e("ElectionId = $electionId")
-        Timber.e("Division = $division")
-        getVoterInfo()
         election.addSource(repository.getElectionById(electionId), election::setValue)
     }
 
-    private fun getVoterInfo() {
+    fun getVoterInfo() {
         viewModelScope.launch {
-            val voterInfo = CivicsApi.retrofitService.getVoterInfo(
-                "${division.country}, ${division.state}",
-                electionId
-            )
-            Timber.e(voterInfo.toString())
-            _voterInfo.value = voterInfo
-            if (voterInfo.state != null && voterInfo.state.isNotEmpty()){
-                _state.value = voterInfo.state[0]
-            } else {
-                _toastText.value = R.string.missing_state
+            _loading.value = true
+            try {
+                val voterInfo = CivicsApi.retrofitService.getVoterInfo(
+                    "${division.country}, ${division.state}",
+                    electionId
+                )
+                _voterInfo.value = voterInfo
+                if (voterInfo.state != null && voterInfo.state.isNotEmpty()) {
+                    _state.value = voterInfo.state[0]
+                } else {
+                    _toastText.value = R.string.missing_state
+                }
+            } catch (e: HttpException) {
+                Timber.e(e)
+                _result.value = Result.HttpError(e.code())
+            } catch (e: Exception) {
+                Timber.e(e)
+                _result.value = Result.Error(e.message ?: "Could not fetch VoterInfo from the API!!")
+            } finally {
+                _loading.value = false
             }
         }
     }
 
-    //TODO: Add live data to hold voter info
-
-    //TODO: Add var and methods to populate voter info
-
-    //TODO: Add var and methods to support loading URLs
     private val _urlToLoad = MutableLiveData<String>()
     val urlToLoad: LiveData<String>
         get() = _urlToLoad
@@ -63,6 +70,10 @@ class VoterInfoViewModel(
     private val _toastText = MutableLiveData<Int>()
     val toastText: LiveData<Int>
         get() = _toastText
+
+    private val _result = MutableLiveData<Result>()
+    val result: LiveData<Result>
+        get() = _result
 
     fun onUrlClick(url: String) {
         if (url.isNotEmpty()) {
@@ -100,5 +111,13 @@ class VoterInfoViewModel(
             }
         }
 
+    }
+
+    fun onResultHandled() {
+        _result.value = null
+    }
+
+    fun onLoadingHandled() {
+        _loading.value = null
     }
 }

@@ -21,20 +21,28 @@
         <Button
             android:id="@+id/upcomingButton"
             style="@style/ButtonStyle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_normal"
+            android:layout_marginVertical="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_small"
             android:text="@string/upcoming_elections"
-            app:layout_constraintBottom_toTopOf="@id/representativeButton" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/representativeButton"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/representativeButton"
             style="@style/ButtonStyle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_normal"
+            android:layout_marginVertical="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_normal"
             android:text="@string/find_my_representatives"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/upcomingButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

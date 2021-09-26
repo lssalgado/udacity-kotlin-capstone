@@ -8,7 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
+import com.example.android.politicalpreparedness.network.Result
 
 class VoterInfoFragment : Fragment() {
 
@@ -18,7 +20,7 @@ class VoterInfoFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = FragmentVoterInfoBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
@@ -44,22 +46,61 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
-        //TODO: Add binding values
+        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
+            loading?.let {
+                if (loading) {
+                    binding.stateLocations.visibility = View.INVISIBLE
+                    binding.stateBallot.visibility = View.INVISIBLE
+                    binding.address.visibility = View.INVISIBLE
+                    binding.loadingAddress.visibility = View.VISIBLE
+                    binding.loadingElectionInformation.visibility = View.VISIBLE
+                } else {
+                    binding.stateLocations.visibility = View.VISIBLE
+                    binding.stateBallot.visibility = View.VISIBLE
+                    binding.address.visibility = View.VISIBLE
+                    binding.loadingAddress.visibility = View.GONE
+                    binding.loadingElectionInformation.visibility = View.GONE
+                }
+                viewModel.onLoadingHandled()
+            }
+        })
 
-        //TODO: Populate voter info -- hide views without provided data.
-        /**
-        Hint: You will need to ensure proper data is provided from previous fragment.
-        */
+        viewModel.result.observe(viewLifecycleOwner, Observer { result ->
+            result?.let {
+                when (it) {
+                    is Result.Error -> {
+                        showToast(it.msg)
+                        viewModel.onResultHandled()
+                    }
+                    is Result.HttpError -> {
+                        showHttpErrorToast(it.code)
+                        viewModel.onResultHandled()
+                    }
+                    is Result.Success -> {
+                        viewModel.onResultHandled()
+                    }
+                }
+            }
+        })
 
-
-        //TODO: Handle loading of URLs
-
-        //TODO: Handle save button UI state
-        //TODO: cont'd Handle save button clicks
         return binding.root
     }
 
-    //TODO: Create method to load URL intents
+    override fun onResume() {
+        super.onResume()
+        viewModel.getVoterInfo()
+    }
+
+    private fun showHttpErrorToast(code: Int) {
+        if (::toast.isInitialized) {
+            // Cancels the current toast to avoid queueing multiple toasts
+            toast.cancel()
+        }
+        val string = getString(R.string.could_not_fetch_voter_info, code)
+        toast = Toast.makeText(context, string, Toast.LENGTH_LONG)
+        toast.show()
+    }
+
     private fun startUrlIntent(url: String) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(browserIntent)
@@ -71,6 +112,15 @@ class VoterInfoFragment : Fragment() {
             toast.cancel()
         }
         toast = Toast.makeText(context, id, Toast.LENGTH_SHORT)
+        toast.show()
+    }
+
+    private fun showToast(msg: String) {
+        if (::toast.isInitialized) {
+            // Cancels the current toast to avoid queueing multiple toasts
+            toast.cancel()
+        }
+        toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
         toast.show()
     }
 

@@ -18,7 +18,6 @@ import java.util.*
 
 private const val BASE_URL = "https://www.googleapis.com/civicinfo/v2/"
 
-// TODO: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
 private val moshi = Moshi.Builder()
         .add(Date::class.java, Rfc3339DateJsonAdapter())
         .add(ElectionAdapter())
@@ -37,12 +36,6 @@ private val retrofit = Retrofit.Builder()
  */
 
 interface CivicsApiService {
-    //TODO: Add elections API Call
-
-    //TODO: Add voterinfo API Call
-
-    //TODO: Add representatives API Call
-
     @GET("elections")
     suspend fun getElections(): ElectionResponse
 
@@ -59,4 +52,10 @@ object CivicsApi {
     val retrofitService: CivicsApiService by lazy {
         retrofit.create(CivicsApiService::class.java)
     }
+}
+
+sealed class Result {
+    object Success : Result()
+    class Error(val msg: String) : Result()
+    class HttpError(val code: Int) : Result()
 }

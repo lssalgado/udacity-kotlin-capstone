@@ -1,6 +1,5 @@
 package com.example.android.politicalpreparedness.election
 
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -18,22 +17,26 @@ fun Button.setText(election: Election?) {
 }
 
 @BindingAdapter("stateLocationText")
-fun TextView.setLocationTextAndIcon(election: Election?) {
-    setTextAndIcon(election, R.string.voting_locations, R.drawable.ic_where_to_vote, R.string.missing_voting_locations)
+fun TextView.setLocationTextAndIcon(state: State?) {
+    val votingLocationFinderUrl: String? = state?.electionAdministrationBody?.votingLocationFinderUrl
+    setTextAndIcon(votingLocationFinderUrl, R.string.voting_locations, R.drawable.ic_where_to_vote, R.string.missing_voting_locations)
 }
 
 @BindingAdapter("stateBallotText")
-fun TextView.setBallotTextAndIcon(election: Election?) {
-    setTextAndIcon(election, R.string.ballot_informations, R.drawable.ic_how_to_vote, R.string.missing_ballot_informations)
+fun TextView.setBallotTextAndIcon(state: State?) {
+    val ballotInfoUrl: String? = state?.electionAdministrationBody?.ballotInfoUrl
+    setTextAndIcon(ballotInfoUrl, R.string.ballot_information, R.drawable.ic_how_to_vote, R.string.missing_ballot_information)
 }
 
-fun TextView.setTextAndIcon(election: Election?, stringId: Int, drawableId: Int, missingStringId: Int) {
-    if (election != null) {
+fun TextView.setTextAndIcon(url: String?, stringId: Int, drawableId: Int, missingStringId: Int) {
+    if (url != null) {
         setText(stringId)
         setCompoundDrawablesWithIntrinsicBounds(context.getDrawable(drawableId), null, null, null)
+        setTextColor(context.getColor(R.color.primaryTextColor))
     } else {
         setText(missingStringId)
         setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+        setTextColor(context.getColor(R.color.red))
     }
 }
 
@@ -41,7 +44,9 @@ fun TextView.setTextAndIcon(election: Election?, stringId: Int, drawableId: Int,
 fun TextView.setAddressText(state: State?) {
     if (state != null && state.electionAdministrationBody.correspondenceAddress != null) {
         text = state.electionAdministrationBody.correspondenceAddress.toFormattedString()
+        setTextColor(context.getColor(R.color.colorAccent))
     } else {
         setText(R.string.missing_address)
+        setTextColor(context.getColor(R.color.red))
     }
 }

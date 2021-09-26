@@ -2,34 +2,40 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-<data>
-    <variable
-        name="election"
-        type="com.example.android.politicalpreparedness.network.models.Election" />
-    <variable
-        name="electionListener"
-        type="com.example.android.politicalpreparedness.election.adapter.ElectionListener" />
-</data>
+
+    <data>
+
+        <variable
+            name="election"
+            type="com.example.android.politicalpreparedness.network.models.Election" />
+
+        <variable
+            name="electionListener"
+            type="com.example.android.politicalpreparedness.election.adapter.ElectionListener" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/margin_small"
         android:onClick="@{() -> electionListener.onClick(election)}">
 
         <TextView
             android:id="@+id/election_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@{election.name}"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{election.name}"/>
+            tools:text="Oklahoma Election" />
 
         <TextView
             android:id="@+id/election_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/election_name"
             android:text="@{election.electionDay.toLocaleString()}"
-            />
+            app:layout_constraintTop_toBottomOf="@id/election_name"
+            tools:text="Oct 12, 2021 12:00:00 AM" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
