@@ -34,12 +34,7 @@ class ElectionsFragment : Fragment() {
             ViewModelProvider(this, viewModelFactory).get(ElectionsViewModel::class.java)
 
         val listener = ElectionListener { election ->
-            findNavController().navigate(
-                ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
-                    election.id,
-                    election.division
-                )
-            )
+            viewModel.onElectionClicked(election)
         }
 
         val currentElectionsAdapter = ElectionListAdapter(listener)
@@ -77,6 +72,18 @@ class ElectionsFragment : Fragment() {
                         viewModel.onResultHandled()
                     }
                 }
+            }
+        })
+
+        viewModel.navigateToVoterInfo.observe(viewLifecycleOwner, Observer { election ->
+            election?.let {
+                findNavController().navigate(
+                    ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
+                        it.id,
+                        it.division
+                    )
+                )
+                viewModel.onVoterInfoNavigated()
             }
         })
 

@@ -44,7 +44,9 @@ fun TextView.setTextAndIcon(url: String?, stringId: Int, drawableId: Int, missin
 fun TextView.setAddressText(state: State?) {
     if (state != null && state.electionAdministrationBody.correspondenceAddress != null) {
         text = state.electionAdministrationBody.correspondenceAddress.toFormattedString()
+        setTextColor(context.getColor(R.color.colorAccent))
     } else {
         setText(R.string.missing_address)
+        setTextColor(context.getColor(R.color.red))
     }
 }

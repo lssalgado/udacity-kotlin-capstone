@@ -38,10 +38,10 @@
     <string name="form_missing_state">Please select a State</string>
     <string name="form_missing_zip">Please fill the Zip Code</string>
 
-    <!-- Missing Data messages-->
+    <!-- Missing VoterInfo Data messages-->
     <string name="missing_voting_locations">Missing voting locations URL</string>
     <string name="missing_ballot_informations">Missing ballot informations URL</string>
-    <string name="missing_address">Missing Election address</string>
+    <string name="missing_address">Missing Correspondence Address</string>
     <string name="missing_url">Missing URL!!</string>
 
     <!-- Error messages -->
