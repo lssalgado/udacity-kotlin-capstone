@@ -57,17 +57,16 @@ class RepresentativeViewModel : ViewModel() {
                     viewModelScope.launch {
                         try {
                             val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(address.toFormattedString())
-                            _loading.value = false
                             _representatives.value =
                                 offices.flatMap { office -> office.getRepresentatives(officials) }
                         } catch (e: HttpException) {
                             Timber.e(e)
                             _result.value = Result.HttpError(e.code())
-                            _loading.value = false
                         } catch (e: Exception) {
                             Timber.e(e)
                             _result.value =
                                 Result.Error(e.message ?: "Could not fetch Representatives from the API!!")
+                        } finally {
                             _loading.value = false
                         }
                     }
