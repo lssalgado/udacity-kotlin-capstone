@@ -119,6 +119,7 @@ class DetailFragment : Fragment() {
                 } else {
                     binding.loadingImg.visibility = View.INVISIBLE
                 }
+                viewModel.onLoadingHandled()
             }
         })
 

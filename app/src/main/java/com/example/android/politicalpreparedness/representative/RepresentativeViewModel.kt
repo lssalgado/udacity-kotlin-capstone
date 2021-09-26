@@ -85,4 +85,8 @@ class RepresentativeViewModel : ViewModel() {
     fun onResultHandled() {
         _result.value = null
     }
+
+    fun onLoadingHandled() {
+        _loading.value = null
+    }
 }
