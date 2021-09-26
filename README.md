@@ -38,7 +38,7 @@ To get started with this project, simply pull the repository and import the proj
 
 ## Suggested Workflow
 
-- [ ] It is recommend you save all beautification until the end of the project. Ensure functionality first, then clean up UI. While UI is a component of the application, it is best to deliver a functional product.
+- [x] It is recommend you save all beautification until the end of the project. Ensure functionality first, then clean up UI. While UI is a component of the application, it is best to deliver a functional product.
 - [x] Start by getting all screens in the application to navigate to each other, even with dummy data. If needed, comment out stub code to get the application to compile. You will need to create actions in *nav_graph.xml* and UI elements to trigger the navigation. 
 - [x] Create an API key and begin work on the Elections Fragment  and associated ViewModel. 
   - [x] Use the elections endpoint in the Civics API and requires no parameters.
@@ -49,23 +49,23 @@ To get started with this project, simply pull the repository and import the proj
 - [x] Begin work on the Representative Fragment and associated ViewModel.
   - [x] This will require edits to Gradle.
   - [x] You will need to create a file to complete the step.
-- [ ] Remove all TODOs from the code.
+- [x] Remove all TODOs from the code.
 - [x] Remove all non error debug logs.
-- [ ] Fix Representatives fragment on landscape mode.
-- [ ] Fix VoterInfo links.
+- [x] Fix Representatives fragment on landscape mode.
+- [x] Fix VoterInfo links.
 - [x] Extract resources.
 
 
 ## Rubric
-- [ ] Android UI/UX
+- [x] Android UI/UX
   - [x] Build a navigable interface consisting of multiple screens of functionality and data.
     - [x] Application includes at least three screens with distinct features using either the Android Navigation Controller or Explicit Intents.
     - [x] The Navigation Controller is used for Fragment-based navigation and intents are utilized for Activity-based navigation.
     - [x] An application bundle is built to store data passed between Fragments and Activities.
-  - [ ] Construct interfaces that adhere to Android standards and display appropriately on screens of different size and resolution.
-    - [ ] Application UI effectively utilizes ConstraintLayout to arrange UI elements effectively and efficiently across application features, avoiding nesting layouts and maintaining a flat UI structure where possible.
-    - [ ] Data collections are displayed effectively, taking advantage of visual hierarchy and arrangement to display data in an easily consumable format.
-    - [ ] Resources are stored appropriately using the internal res directory to store data in appropriate locations including string* values, drawables, colors, dimensions, and more.
+  - [x] Construct interfaces that adhere to Android standards and display appropriately on screens of different size and resolution.
+    - [x] Application UI effectively utilizes ConstraintLayout to arrange UI elements effectively and efficiently across application features, avoiding nesting layouts and maintaining a flat UI structure where possible.
+    - [x] Data collections are displayed effectively, taking advantage of visual hierarchy and arrangement to display data in an easily consumable format.
+    - [x] Resources are stored appropriately using the internal res directory to store data in appropriate locations including string* values, drawables, colors, dimensions, and more.
     - [x] Every element within ConstraintLayout should include the id field and at least 1 vertical constraint.
     - [x] Data collections should be loaded into the application using ViewHolder pattern and appropriate View, such as RecyclerView.
   - [x] Animate UI components to better utilize screen real estate and create engaging content.
@@ -86,18 +86,18 @@ To get started with this project, simply pull the repository and import the proj
     - [x] Data stored is accessible across user sessions.
     - [x] Data storage operations are performed on the appropriate threads as to not stall the UI thread.
     - [x] Data is structured with appropriate data types and scope as required by application functionality.
-- [ ] Android system and hardware integration
+- [x] Android system and hardware integration
   - [x] Architect application functionality using MVVM.
     - [x] Application separates responsibilities amongst classes and structures using the MVVM Pattern:
       - [x] Fragments/Activities control the Views
       - [x] Models houses the data structures,
       - [x] ViewModel controls business logic.
     - [x] Application adheres to architecture best practices, such as the observer pattern, to prevent leaking components, such as Activity Contexts, and efficiently utilize system resources.
-  - [ ] Implement logic to handle and respond to hardware and system events that impact the Android Lifecycle.
+  - [x] Implement logic to handle and respond to hardware and system events that impact the Android Lifecycle.
     - [x] Beyond MVVM, the application handles system events, such as orientation changes, application switching, notifications, and similar events gracefully including, but not limited to:
       - [x] Storing and restoring state and information
-      - [ ] Properly handling lifecycle events in regards to behavior and functionality
-        - [ ] Implement bundles to restore and save data
+      - [x] Properly handling lifecycle events in regards to behavior and functionality
+        - [x] Implement bundles to restore and save data
       - [x] Handling interaction to and from the application via Intents
       - [x] Handling Android Permissions
   - [x] Utilize system hardware to provide the user with advanced functionality and features.

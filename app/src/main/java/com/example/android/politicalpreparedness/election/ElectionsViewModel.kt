@@ -34,6 +34,4 @@ class ElectionsViewModel(private val repository: ElectionRepository): ViewModel(
     fun onVoterInfoNavigated() {
         _navigateToVoterInfo.value = null
     }
-    //TODO: Create functions to navigate to saved or upcoming election voter info
-
 }
