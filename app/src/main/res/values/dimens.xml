@@ -11,5 +11,6 @@
 
     <!-- Representative Photo-->
     <dimen name="representative_photo_size">64dp</dimen>
+    <dimen name="voter_info_loading_image_size">64dp</dimen>
 
 </resources>

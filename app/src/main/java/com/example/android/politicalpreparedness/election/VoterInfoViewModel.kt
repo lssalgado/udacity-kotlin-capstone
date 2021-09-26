@@ -23,6 +23,10 @@ class VoterInfoViewModel(
     val voterInfo: LiveData<VoterInfoResponse>
         get() = _voterInfo
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean>
+        get() = _loading
+
     private val _state = MutableLiveData<State>()
     val state: LiveData<State>
         get() = _state
@@ -35,6 +39,7 @@ class VoterInfoViewModel(
 
     fun getVoterInfo() {
         viewModelScope.launch {
+            _loading.value = true
             try {
                 val voterInfo = CivicsApi.retrofitService.getVoterInfo(
                     "${division.country}, ${division.state}",
@@ -52,6 +57,8 @@ class VoterInfoViewModel(
             } catch (e: Exception) {
                 Timber.e(e)
                 _result.value = Result.Error(e.message ?: "Could not fetch VoterInfo from the API!!")
+            } finally {
+                _loading.value = false
             }
         }
     }
@@ -108,5 +115,9 @@ class VoterInfoViewModel(
 
     fun onResultHandled() {
         _result.value = null
+    }
+
+    fun onLoadingHandled() {
+        _loading.value = null
     }
 }

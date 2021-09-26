@@ -46,6 +46,25 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
+        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
+            loading?.let {
+                if (loading) {
+                    binding.stateLocations.visibility = View.INVISIBLE
+                    binding.stateBallot.visibility = View.INVISIBLE
+                    binding.address.visibility = View.INVISIBLE
+                    binding.loadingAddress.visibility = View.VISIBLE
+                    binding.loadingElectionInformation.visibility = View.VISIBLE
+                } else {
+                    binding.stateLocations.visibility = View.VISIBLE
+                    binding.stateBallot.visibility = View.VISIBLE
+                    binding.address.visibility = View.VISIBLE
+                    binding.loadingAddress.visibility = View.GONE
+                    binding.loadingElectionInformation.visibility = View.GONE
+                }
+                viewModel.onLoadingHandled()
+            }
+        })
+
         viewModel.result.observe(viewLifecycleOwner, Observer { result ->
             result?.let {
                 when (it) {

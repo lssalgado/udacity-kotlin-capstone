@@ -18,6 +18,9 @@
     <string name="voting_locations">Voting Locations</string>
     <string name="ballot_informations">Ballot Informations</string>
     <string name="election_information">Election Information</string>
+    <string name="loading_election_information">Loading Election Information</string>
+    <string name="loading_correspondence_address">Loading Correspondence Address</string>
+
 
     <!-- Representative Fragment-->
     <string name="settings">Settings</string>

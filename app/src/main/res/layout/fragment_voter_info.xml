@@ -81,6 +81,18 @@
                     app:stateBallotText="@{viewModel.state}"
                     tools:text="@string/ballot_informations" />
 
+                <ImageView
+                    android:id="@+id/loading_election_information"
+                    android:layout_width="@dimen/voter_info_loading_image_size"
+                    android:layout_height="@dimen/voter_info_loading_image_size"
+                    android:layout_marginHorizontal="@dimen/margin_normal"
+                    android:adjustViewBounds="false"
+                    android:contentDescription="@string/loading_election_information"
+                    android:src="@drawable/loading_animation"
+                    app:layout_constraintBottom_toBottomOf="@id/state_ballot"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/state_locations" />
+
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/address_group"
                     android:layout_width="wrap_content"
@@ -106,6 +118,18 @@
                     app:addressText="@{viewModel.state}"
                     app:layout_constraintTop_toBottomOf="@id/state_correspondence_header"
                     tools:text="Po Box 53156\nOklahoma City, Oklahoma 73152" />
+
+                <ImageView
+                    android:id="@+id/loading_address"
+                    android:layout_width="@dimen/voter_info_loading_image_size"
+                    android:layout_height="@dimen/voter_info_loading_image_size"
+                    android:layout_marginHorizontal="@dimen/margin_normal"
+                    android:adjustViewBounds="false"
+                    android:contentDescription="@string/loading_election_information"
+                    android:src="@drawable/loading_animation"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/state_correspondence_header" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
