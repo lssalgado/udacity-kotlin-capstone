@@ -45,11 +45,6 @@ import kotlin.collections.toCollection
 
 class DetailFragment : Fragment() {
 
-    companion object {
-        const val REQUEST_LOCATION_PERMISSION_ID = 1001
-        private const val REQUEST_TURN_DEVICE_LOCATION_ON = 1002
-    }
-
     private lateinit var toast: Toast
     private lateinit var binding: FragmentRepresentativeBinding
     private val permissions: Array<String> = arrayOf(
@@ -335,5 +330,10 @@ class DetailFragment : Fragment() {
         }
         toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
         toast.show()
+    }
+
+    companion object {
+        const val REQUEST_LOCATION_PERMISSION_ID = 1001
+        private const val REQUEST_TURN_DEVICE_LOCATION_ON = 1002
     }
 }
