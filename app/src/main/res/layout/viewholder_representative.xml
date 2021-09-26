@@ -44,7 +44,7 @@
             android:layout_marginHorizontal="@dimen/margin_small"
             android:text="@{representative.official.name}"
             app:layout_constraintBottom_toTopOf="@id/representative_party"
-            app:layout_constraintEnd_toStartOf="@id/linear_layout"
+            app:layout_constraintEnd_toStartOf="@id/www_icon"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/representative_photo"
             app:layout_constraintTop_toBottomOf="@id/representative_title"
@@ -57,48 +57,50 @@
             android:layout_marginHorizontal="@dimen/margin_small"
             android:text="@{representative.official.party}"
             app:layout_constraintBottom_toBottomOf="@id/representative_photo"
-            app:layout_constraintEnd_toStartOf="@id/linear_layout"
+            app:layout_constraintEnd_toStartOf="@id/www_icon"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/representative_photo"
             tools:text="Democratic Party" />
 
-        <LinearLayout
-            android:id="@+id/linear_layout"
+        <ImageView
+            android:id="@+id/www_icon"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginVertical="@dimen/margin_small"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@id/representative_photo"
+            android:layout_marginVertical="@dimen/margin_tiny"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/webpage_icon"
+            android:src="@drawable/ic_www"
+            app:layout_constraintBottom_toBottomOf="@id/representative_party"
+            app:layout_constraintEnd_toStartOf="@id/facebook_icon"
+            app:layout_constraintTop_toTopOf="@id/representative_name" />
+
+        <ImageView
+            android:id="@+id/facebook_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/margin_tiny"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/facebook_icon"
+            android:src="@drawable/ic_facebook"
+            app:layout_constraintBottom_toBottomOf="@id/representative_party"
+            app:layout_constraintEnd_toStartOf="@id/twitter_icon"
+            app:layout_constraintTop_toTopOf="@id/representative_name" />
+
+        <ImageView
+            android:id="@+id/twitter_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/margin_tiny"
+            android:layout_marginStart="@dimen/margin_tiny"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/twitter_icon"
+            android:src="@drawable/ic_twitter"
+            app:layout_constraintBottom_toBottomOf="@id/representative_party"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/representative_title">
-
-            <ImageView
-                android:id="@+id/www_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/margin_tiny"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/webpage_icon"
-                android:src="@drawable/ic_www" />
-
-            <ImageView
-                android:id="@+id/facebook_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/margin_tiny"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/facebook_icon"
-                android:src="@drawable/ic_facebook" />
-
-            <ImageView
-                android:id="@+id/twitter_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/margin_tiny"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/twitter_icon"
-                android:src="@drawable/ic_twitter" />
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="@id/representative_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
