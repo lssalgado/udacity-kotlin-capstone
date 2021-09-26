@@ -62,10 +62,12 @@ class ElectionsFragment : Fragment() {
                 when (it) {
                     is Result.Error -> {
                         showToast(it.msg)
+                        binding.upcomingLoading.visibility = View.INVISIBLE
                         viewModel.onResultHandled()
                     }
                     is Result.HttpError -> {
                         showHttpErrorToast(it.code)
+                        binding.upcomingLoading.visibility = View.INVISIBLE
                         viewModel.onResultHandled()
                     }
                     else -> {
